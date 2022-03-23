@@ -1,0 +1,38 @@
+**/node_modules
+/build
+/e2e-tests/build
+/scripts/build
+/target
+yarn-error.log
+**/*.rs.bk
+.env.*
+!.env.local
+!.env.docker
+.DS_Store
+/.clinic
+**.log
+**/logs
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+/docs/.yarn
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

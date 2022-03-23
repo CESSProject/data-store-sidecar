@@ -1,0 +1,16 @@
+/**
+ * Names of config env vars of Sidecar.
+ */
+export enum CONFIG {
+	BIND_HOST = 'BIND_HOST',
+	PORT = 'PORT',
+	WS_URL = 'WS_URL',
+	LEVEL = 'LEVEL',
+	JSON = 'JSON',
+	FILTER_RPC = 'FILTER_RPC',
+	STRIP_ANSI = 'STRIP_ANSI',
+	TYPES_BUNDLE = 'TYPES_BUNDLE',
+	TYPES_CHAIN = 'TYPES_CHAIN',
+	TYPES_SPEC = 'TYPES_SPEC',
+	TYPES = 'TYPES',
+}

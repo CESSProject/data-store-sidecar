@@ -1,0 +1,23 @@
+{
+  "extends": "@substrate/dev/config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "build",
+    "rootDirs": ["./src", "./e2e-tests", "./scripts"],
+    "suppressImplicitAnyIndexErrors": true,
+    "resolveJsonModule": true,
+  },
+  "typeRoots": [
+    "./node_modules/@types"
+  ],
+  "exclude": [
+    "node_modules",
+    "docs"
+  ],
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.json",
+    "./config/**/*.json",
+    "./config/**/*.ts"
+  ]
+}

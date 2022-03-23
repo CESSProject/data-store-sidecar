@@ -1,0 +1,89 @@
+import { ApiPromise } from '@polkadot/api';
+import AbstractController from 'src/controllers/AbstractController';
+import { AbstractService } from 'src/services/AbstractService';
+
+import { controllers } from '../controllers';
+import { ControllerConfig } from '../types/chains-config';
+import { acalaControllers } from './acalaControllers';
+import { astarControllers } from './astarControllers';
+import { bifrostControllers } from './bifrostControllers';
+import { calamariControllers } from './calamariControllers';
+import { crustControllers } from './crustControllers';
+import { defaultControllers } from './defaultControllers';
+import { dockMainnetControllers } from './dockMainnetControllers';
+import { dockPoSMainnetControllers } from './dockPoSMainnetControllers';
+import { dockTestnetControllers } from './dockPoSTestnetControllers';
+import { karuraControllers } from './karuraControllers';
+import { kiltControllers } from './kiltControllers';
+import { kulupuControllers } from './kulupuControllers';
+import { kusamaControllers } from './kusamaControllers';
+import { mandalaControllers } from './mandalaControllers';
+import { mantaControllers } from './mantaControllers';
+import { polkadotControllers } from './polkadotControllers';
+import { polymeshControllers } from './polymeshControllers';
+import { shidenControllers } from './shidenControllers';
+import { soraControllers } from './soraControllers';
+import { statemineControllers } from './statemineControllers';
+import { statemintControllers } from './statemintControllers';
+import { westendControllers } from './westendControllers';
+
+const specToControllerMap = {
+	westend: westendControllers,
+	polkadot: polkadotControllers,
+	polymesh: polymeshControllers,
+	kusama: kusamaControllers,
+	kulupu: kulupuControllers,
+	kilt: kiltControllers,
+	mandala: mandalaControllers,
+	'dock-main-runtime': dockMainnetControllers,
+	'dock-pos-main-runtime': dockPoSMainnetControllers,
+	'dock-pos-test-runtime': dockTestnetControllers,
+	statemine: statemineControllers,
+	statemint: statemintControllers,
+	westmine: statemineControllers,
+	westmint: statemintControllers,
+	shiden: shidenControllers,
+	astar: astarControllers,
+	sora: soraControllers,
+	calamari: calamariControllers,
+	karura: karuraControllers,
+	acala: acalaControllers,
+	manta: mantaControllers,
+	crust: crustControllers,
+	bifrost: bifrostControllers,
+};
+
+/**
+ * Return an array of instantiated controller instances based off of a `specName`.
+ *
+ * @param api ApiPromise to inject into controllers
+ * @param implName
+ */
+export function getControllersForSpec(
+	api: ApiPromise,
+	specName: string
+): AbstractController<AbstractService>[] {
+	if (specToControllerMap[specName]) {
+		return getControllersFromConfig(api, specToControllerMap[specName]);
+	}
+
+	// If we don't have the specName in the specToControllerMap we use the default
+	// contoller config
+	return getControllersFromConfig(api, defaultControllers);
+}
+
+/**
+ * Return an array of instantiated controller instances based off of a
+ * `ControllerConfig`.
+ *
+ * @param api ApiPromise to inject into controllers
+ * @param config controller mount configuration object
+ */
+function getControllersFromConfig(api: ApiPromise, config: ControllerConfig) {
+	const controllersToInclude = config.controllers;
+
+	return controllersToInclude.reduce((acc, controller) => {
+		acc.push(new controllers[controller](api, config.options));
+		return acc;
+	}, [] as AbstractController<AbstractService>[]);
+}

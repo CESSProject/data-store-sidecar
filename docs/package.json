@@ -1,0 +1,31 @@
+{
+  "name": "sidecar-swagger-ui",
+  "version": "0.1.0",
+  "description": "Swagger UI for Substrate API Sidecar",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack --watch"
+  },
+  "author": "Parity Technologies <admin@parity.io>",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^10.2.4",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "dependencies": {
+    "css-loader": "^6.6.0",
+    "json-loader": "^0.5.7",
+    "style-loader": "^3.3.1",
+    "swagger-ui": "4.5.0",
+    "yaml-loader": "^0.6.0"
+  },
+  "resolutions": {
+    "prismjs": "^1.23.0",
+    "ua-parser-js": "<= 0.7.21",
+    "node-forge": ">=1.0.0"
+  }
+}

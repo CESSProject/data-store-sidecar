@@ -6,3 +6,4 @@ export * from './paras';
 export * from './runtime';
 export * from './transaction';
 export * from './sminer';
+export * from './fileBank';

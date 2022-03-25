@@ -21,7 +21,8 @@ export const statemineControllers: ControllerConfig = {
 		'TransactionFeeEstimate',
 		'TransactionMaterial',
 		'TransactionSubmit',
-		'AllMiner'
+		'AllMiner',
+		'All'
 	],
 	options: {
 		finalizes: true,

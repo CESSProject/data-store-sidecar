@@ -4,18 +4,24 @@ import { AbstractService } from '../AbstractService';
 import { extractCauseAndStack } from './extractCauseAndStack';
 import _ from 'lodash';
 
-export class AllMiner extends AbstractService {
+export class All extends AbstractService {
 	async fetchMiner(eventStr: string, param: any): Promise<any> {
 		const { api } = this;
 		try {
-			// console.log('eventStr,param', eventStr, param);
+			console.log('eventStr,param', eventStr, param);
 			let retsult;
-			let fun = api.query.sminer[eventStr];
-			if (fun.entries && typeof fun.entries == 'function') {
+			let fun = api.query.fileBank[eventStr];
+			if (param.id) {
+				retsult = await fun(param.id);
+				retsult = retsult.toJSON();
+			}
+			else if (fun.entries && typeof fun.entries == 'function') {
 				if (param && param.id) {
+					console.log('run here 1');
 					retsult = await fun(param.id);
 					retsult = retsult.toJSON();
 				} else {
+					console.log('run here 2');
 					retsult = await fun.entries();
 					retsult = retsult.map(([key, entry]) => {
 						let id = _.get(key.args.map((k) => k.toHuman()), `0`);
@@ -25,12 +31,15 @@ export class AllMiner extends AbstractService {
 				}
 			} else {
 				if (param && param.id) {
+					console.log('run here 3');
 					retsult = await fun(param.id);
 				} else {
+					console.log('run here 4');
 					retsult = await fun();
 				}
 				retsult = retsult.toJSON();
 			}
+			console.log('run here 5');
 
 
 

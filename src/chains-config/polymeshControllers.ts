@@ -24,7 +24,8 @@ export const polymeshControllers: ControllerConfig = {
 		'TransactionFeeEstimate',
 		'TransactionMaterial',
 		'TransactionSubmit',
-		'AllMiner'
+		'AllMiner',
+		'All'
 	],
 	options: {
 		finalizes: true,

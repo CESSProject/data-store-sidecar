@@ -1,8 +1,9 @@
 import { ApiPromise } from '@polkadot/api';
 import { RequestHandler } from 'express';
 
-import { AllMiner } from '../../services';
+import { All} from '../../services';
 import AbstractController from '../AbstractController';
+
 
 /**
  * GET pending extrinsics from the Substrate node.
@@ -12,9 +13,9 @@ import AbstractController from '../AbstractController';
  * 		- `hash`: H256 hash of the extrinsic.
  * 		- `encodedExtrinsic`: Scale encoded extrinsic.
  */
-export default class AllMinerController extends AbstractController<AllMiner> {
+export default class AllController extends AbstractController<All> {
 	constructor(api: ApiPromise) {
-		super(api, '/sminer/', new AllMiner(api));
+		super(api, '/fileBank/', new All(api));
 		this.initRoutes();
 	}
 
@@ -22,13 +23,12 @@ export default class AllMinerController extends AbstractController<AllMiner> {
 		const { api } = this;
 		// this.router.use(this.path, validateAddress);
 		// this.safeMountAsyncGetHandlers([['', this.getAllMiner]]);
-		this.safeMountAsyncGetHandlers(Object.keys(api.query['sminer']).map(t=>{
+		let arr:any=Object.keys(api.query['fileBank']).map(t=>{
 			let url:string=t;
-			if(url=='minerDetails'){
-				url+='/:id';
-			}
-			return [url, this.getAllMiner];
-		}));
+			return [url, this.getAll];
+		});
+		arr.push(['file/:id',this.getAll]);
+		this.safeMountAsyncGetHandlers(arr);
 	}
 
 	/**
@@ -37,17 +37,17 @@ export default class AllMinerController extends AbstractController<AllMiner> {
 	 * @param _req Express Request
 	 * @param res Express Response
 	 */
-	private getAllMiner: RequestHandler = async (
+	private getAll: RequestHandler = async (
 		_req,
 		res
 	): Promise<void> => {
-		// console.log('***********start************');
-		// console.log(_req.path);
+		console.log('***********start************');
+		console.log(_req.path);
 		let arr:string[]=_req.path.split('/');
-		// console.log(_req.params);
-		// console.log(_req.query);
-		// console.log('***********end************');
-		AllMinerController.sanitizedSend(
+		console.log(_req.params);
+		console.log(_req.query);
+		console.log('***********end************');
+		AllController.sanitizedSend(
 			res,
 			await this.service.fetchMiner(arr[2],_req.params)
 		);

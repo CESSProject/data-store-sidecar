@@ -25,7 +25,8 @@ export const shidenControllers: ControllerConfig = {
 		'TransactionFeeEstimate',
 		'TransactionMaterial',
 		'TransactionSubmit',
-		'AllMiner'
+		'AllMiner',
+		'All'
 	],
 	options: {
 		finalizes: true,

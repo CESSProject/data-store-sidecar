@@ -23,6 +23,7 @@ import {
 } from './transaction';
 
 import { AllMiner } from './sminer';
+import { All } from './fileBank';
 
 /**
  * Object containing every controller class definition.
@@ -51,5 +52,6 @@ export const controllers = {
 	TransactionMaterial,
 	TransactionSubmit,
 	Paras,
-	AllMiner
+	AllMiner,
+	All
 };

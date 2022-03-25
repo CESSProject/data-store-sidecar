@@ -52,7 +52,6 @@ export default class App {
 	 */
 	private initMiddleware(middleware: RequestHandler[]): void {
 		for (const ware of middleware) {
-			console.log('********************************',ware);
 			this.app.use(ware);
 		}
 	}

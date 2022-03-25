@@ -41,15 +41,15 @@ export default class AllController extends AbstractController<All> {
 		_req,
 		res
 	): Promise<void> => {
-		console.log('***********start************');
-		console.log(_req.path);
+		// console.log('***********start************');
+		// console.log(_req.path);
 		let arr:string[]=_req.path.split('/');
-		console.log(_req.params);
-		console.log(_req.query);
-		console.log('***********end************');
+		// console.log(_req.params);
+		// console.log(_req.query);
+		// console.log('***********end************');
 		AllController.sanitizedSend(
 			res,
-			await this.service.fetchMiner(arr[2],_req.params)
+			await this.service.fetchFileBank(arr[2],_req.params)
 		);
 	};
 }

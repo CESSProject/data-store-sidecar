@@ -55,7 +55,7 @@ export class Specs {
 				CONFIG.PORT,
 				'Network interface we bind to. You *MUST* use 0.0.0.0 if you are using Docker.',
 				{
-					default: 8080,
+					default: 3001,
 					type: 'number',
 					regexp: /^\d{2,6}$/,
 				}

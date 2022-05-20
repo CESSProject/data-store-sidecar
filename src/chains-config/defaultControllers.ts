@@ -30,6 +30,7 @@ export const defaultControllers: ControllerConfig = {
 		'TransactionMaterial',
 		'TransactionSubmit',
 		'AllMiner',
+'Store',
 		'All'
 	],
 	options: {

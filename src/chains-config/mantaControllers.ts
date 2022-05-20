@@ -28,6 +28,7 @@ export const mantaControllers: ControllerConfig = {
 		'TransactionMaterial',
 		'TransactionSubmit',
 		'AllMiner',
+'Store',
 		'All'
 	],
 	options: {

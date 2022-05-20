@@ -23,6 +23,7 @@ export const dockMainnetControllers: ControllerConfig = {
 		'TransactionMaterial',
 		'TransactionSubmit',
 		'AllMiner',
+'Store',
 		'All'
 	],
 	options: {

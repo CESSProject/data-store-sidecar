@@ -23,6 +23,7 @@ export const crustControllers: ControllerConfig = {
 		'TransactionMaterial',
 		'TransactionSubmit',
 		'AllMiner',
+'Store',
 		'All'
 	],
 	options: {

@@ -24,6 +24,7 @@ export const bifrostControllers: ControllerConfig = {
 		'TransactionMaterial',
 		'TransactionSubmit',
 		'AllMiner',
+'Store',
 		'All'
 	],
 	options: {

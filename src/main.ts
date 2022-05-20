@@ -35,6 +35,7 @@ import * as middleware from './middleware';
 import { parseArgs } from './parseArgs';
 import { SidecarConfig } from './SidecarConfig';
 
+
 async function main() {
 	const { config } = SidecarConfig;
 	const { logger } = Log;
@@ -75,18 +76,18 @@ async function main() {
 
 	// Create our App
 	const app = new App({
-		preMiddleware: [json(), middleware.httpLoggerCreate(logger)],
+		preMiddleware: [json(), middleware.httpLoggerCreate(logger),middleware.formidableMiddleware],
 		controllers: getControllersForSpec(api, specName.toString()),
 		postMiddleware: [
 			middleware.txError,
 			middleware.httpError,
 			middleware.error,
 			middleware.legacyError,
-			middleware.internalError,
+			middleware.internalError
 		],
 		port: config.EXPRESS.PORT,
 		host: config.EXPRESS.HOST,
-	});
+	});	
 
 	// Start the server
 	app.listen();

@@ -24,7 +24,8 @@ export const acalaControllers: ControllerConfig = {
 		'TransactionMaterial',
 		'TransactionSubmit',
 		'AllMiner',
-		'All'
+		'Store',
+		'All',
 	],
 	options: {
 		finalizes: true,

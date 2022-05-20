@@ -1,0 +1,1 @@
+export { formidableMiddleware } from './formidable';

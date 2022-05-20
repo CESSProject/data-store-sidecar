@@ -69,6 +69,17 @@ export default abstract class AbstractController<T extends AbstractService> {
 			);
 		}
 	}
+	protected safeMountAsyncPostHandlers(
+		pathsAndHandlers: [string, SidecarRequestHandler][]
+	): void {
+		for (const pathAndHandler of pathsAndHandlers) {
+			const [pathSuffix, handler] = pathAndHandler;
+			this.router.post(
+				`${this.path}${pathSuffix}`,
+				AbstractController.catchWrap(handler as RequestHandler)
+			);
+		}
+	}
 
 	/**
 	 * Wrapper for any asynchronous RequestHandler function. Pipes errors

@@ -7,3 +7,4 @@ export * from './runtime';
 export * from './transaction';
 export * from './sminer';
 export * from './fileBank';
+export * from './store';

@@ -2,6 +2,7 @@
   "extends": "@substrate/dev/config/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "allowJs": true,
     "outDir": "build",
     "rootDirs": ["./src", "./e2e-tests", "./scripts"],
     "suppressImplicitAnyIndexErrors": true,

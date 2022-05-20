@@ -23,6 +23,7 @@ export const kiltControllers: ControllerConfig = {
 		'TransactionFeeEstimate',
 		'TransactionSubmit',
 		'AllMiner',
+'Store',
 		'All'
 	],
 	options: {

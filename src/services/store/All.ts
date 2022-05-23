@@ -5,11 +5,13 @@ import { AbstractService } from '../AbstractService';
 import { extractCauseAndStack } from './extractCauseAndStack';
 import _ from 'lodash';
 import fs from 'fs';
-import makeDir from 'make-dir';
+// import makeDir from 'make-dir';
 import path from 'path';
 import { FileStorage } from 'cess-js-sdk';
 import { SidecarConfig } from '../../SidecarConfig';
 import { ParamsDictionary } from 'express-serve-static-core';
+
+const fileDir = path.join(__dirname, '../../../upload-file/');
 
 export class Store extends AbstractService {
 	storeApi: any;
@@ -88,10 +90,7 @@ export class Store extends AbstractService {
 	}
 	async delete(params: ParamsDictionary): Promise<any> {
 		try {
-			const retsult = await this.storeApi.fileDelete(
-				params.mnemonic,
-				params.fileId
-			);
+			const retsult = await this.storeApi.fileDeleteWithTxHash(params.txHash);
 			return {
 				retsult,
 			};
@@ -106,12 +105,7 @@ export class Store extends AbstractService {
 	}
 	async expansion(params: ParamsDictionary): Promise<any> {
 		try {
-			const retsult = await this.storeApi.expansion(
-				params.mnemonic,
-				params.spaceCount,
-				params.leaseCount,
-				params.maxPrice
-			);
+			const retsult = await this.storeApi.expansionWithTxHash(params.txHash);
 			return {
 				retsult,
 			};
@@ -124,28 +118,12 @@ export class Store extends AbstractService {
 			};
 		}
 	}
-	async upload(params: ParamsDictionary, req: any): Promise<any> {
+	async upload(params: ParamsDictionary): Promise<any> {
 		try {
-			let fileName = 'a.txt';
-			const fileDir = path.join(__dirname, '../../../file/');
-			await makeDir(fileDir);
-			const filePath = fileDir + fileName;
-			console.log('fileDir', fileDir);
-			console.log('req.fields', req.fields);
-			console.log('req.files', req.files);
-
-			const read = fs.createReadStream(req.files.fileu.path);
-			fileName=req.files.fileu.name;
-			let write = fs.createWriteStream('/file/' + fileName);
-			read.pipe(write);
-
-			// fs.writeFileSync(filePath, 'afdsafdsa');
-			return 1;
-			const retsult = await this.storeApi.fileUpload(
-				params.mnemonic,
-				filePath,
-				params.backups,
-				params.downloadfee,
+			const retsult = await this.storeApi.fileUploadWithTxHash(
+				params.txHash,
+				params.filePath,
+				params.fileid,
 				params.privatekey
 			);
 			return {
@@ -162,7 +140,44 @@ export class Store extends AbstractService {
 	}
 	async download(params: ParamsDictionary): Promise<any> {
 		try {
-			const retsult = await this.storeApi.expansion(
+			const retsult = await this.storeApi.fileDownload(
+				params.fileId, 
+				fileDir, 
+				params.privatekey
+			);
+			return {
+				retsult,
+			};
+		} catch (err) {
+			const { cause, stack } = extractCauseAndStack(err);
+			throw {
+				error: 'Unable to fetch download',
+				cause,
+				stack,
+			};
+		}
+	}
+	async getDeleteTxHash(params: ParamsDictionary): Promise<any> {
+		try {
+			const retsult = await this.storeApi.getFileDeleteTxHash(
+				params.mnemonic,
+				params.fileId
+			);
+			return {
+				retsult,
+			};
+		} catch (err) {
+			const { cause, stack } = extractCauseAndStack(err);
+			throw {
+				error: 'Unable to fetch findFile',
+				cause,
+				stack,
+			};
+		}
+	}
+	async getExpansionTxHash(params: ParamsDictionary): Promise<any> {
+		try {
+			const retsult = await this.storeApi.getExpansionTxHash(
 				params.mnemonic,
 				params.spaceCount,
 				params.leaseCount,
@@ -175,6 +190,45 @@ export class Store extends AbstractService {
 			const { cause, stack } = extractCauseAndStack(err);
 			throw {
 				error: 'Unable to fetch findFile',
+				cause,
+				stack,
+			};
+		}
+	}
+	async getUploadTxHash(params: ParamsDictionary, req: any): Promise<any> {
+		try {
+			// let fileName = 'a.txt';
+			// const fileDir = path.join(__dirname, '../../../file/');
+			// await makeDir(fileDir);
+
+			// console.log('fileDir', fileDir);
+			console.log('req.fields', req.fields);
+			console.log('req.files', req.files);
+
+			// const read = fs.createReadStream(req.files.file.path);
+			// fileName=req.files.file.name;
+			// const filePath = fileDir + fileName;
+			// let write = fs.createWriteStream(filePath);
+			// read.pipe(write);
+
+			// fs.writeFileSync(filePath, 'afdsafdsa');
+			// return 1;
+			const retsult = await this.storeApi.getFileUploadTxHash(
+				params.mnemonic,
+				req.files.file.path,
+				params.backups,
+				params.downloadfee,
+				params.privatekey
+			);
+			let newFilePath=path.dirname(req.files.file.path);
+			newFilePath=path.join(newFilePath,'/')+req.files.file.name;
+			fs.renameSync(req.files.file.path,newFilePath);
+			retsult.filePath=newFilePath;
+			return retsult;
+		} catch (err) {
+			const { cause, stack } = extractCauseAndStack(err);
+			throw {
+				error: 'Unable to fetch upload',
 				cause,
 				stack,
 			};

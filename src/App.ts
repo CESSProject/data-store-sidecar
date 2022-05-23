@@ -6,7 +6,7 @@ import {
 	RequestHandler,
 	Response,
 } from 'express';
-
+import path from 'path';
 import packageJson from '../package.json';
 import AbstractController from './controllers/AbstractController';
 import { AbstractService } from './services/AbstractService';
@@ -54,6 +54,9 @@ export default class App {
 		for (const ware of middleware) {
 			this.app.use(ware);
 		}
+		const staticPath = path.join(__dirname, '../../public');
+		console.log('static path:', staticPath);
+		this.app.use(express.static(staticPath));
 	}
 
 	/**

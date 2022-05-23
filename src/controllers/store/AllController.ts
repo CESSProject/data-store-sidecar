@@ -35,6 +35,11 @@ export default class AllController extends AbstractController<Store> {
 		arrPost.push(['file/download', this.postAll]);
 		arrPost.push(['file/delete', this.postAll]);
 		arrPost.push(['space/expansion', this.postAll]);
+
+		arrPost.push(['tx/getUploadTxHash', this.postAll]);
+		arrPost.push(['tx/getDeleteTxHash', this.postAll]);
+		arrPost.push(['tx/getExpansionTxHash', this.postAll]);
+
 		this.safeMountAsyncPostHandlers(arrPost);
 	}
 
@@ -71,6 +76,7 @@ export default class AllController extends AbstractController<Store> {
 		console.log('path=', _req.path);
 		const arr: string[] = _req.path.split('/');
 		const funName = arr[3];
+		console.log('content-type',_req.headers['content-type'])
 
 
 		let params:any=_req.body;

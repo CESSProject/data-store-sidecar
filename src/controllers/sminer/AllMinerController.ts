@@ -22,7 +22,9 @@ export default class AllMinerController extends AbstractController<AllMiner> {
 		const { api } = this;
 		// this.router.use(this.path, validateAddress);
 		// this.safeMountAsyncGetHandlers([['', this.getAllMiner]]);
-		this.safeMountAsyncGetHandlers(Object.keys(api.query['sminer']).map(t=>{
+		const apis=api.query['sminer'];
+		if(!apis) return;
+		this.safeMountAsyncGetHandlers(Object.keys(apis).map(t=>{
 			let url:string=t;
 			if(url=='minerDetails'){
 				url+='/:id';

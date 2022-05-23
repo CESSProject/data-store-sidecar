@@ -23,7 +23,9 @@ export default class AllController extends AbstractController<All> {
 		const { api } = this;
 		// this.router.use(this.path, validateAddress);
 		// this.safeMountAsyncGetHandlers([['', this.getAllMiner]]);
-		let arr:any=Object.keys(api.query['fileBank']).map(t=>{
+		const apis=api.query['fileBank'];
+		if(!apis) return;
+		let arr:any=Object.keys(apis).map(t=>{
 			let url:string=t;
 			return [url, this.getAll];
 		});

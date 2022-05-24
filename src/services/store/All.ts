@@ -5,13 +5,14 @@ import { AbstractService } from '../AbstractService';
 import { extractCauseAndStack } from './extractCauseAndStack';
 import _ from 'lodash';
 import fs from 'fs';
-// import makeDir from 'make-dir';
+import makeDir from 'make-dir';
 import path from 'path';
 import { FileStorage } from 'cess-js-sdk';
 import { SidecarConfig } from '../../SidecarConfig';
 import { ParamsDictionary } from 'express-serve-static-core';
 
-const fileDir = path.join(__dirname, '../../../upload-file/');
+const fileDir = path.join(__dirname, '../../../../upload-file/');
+makeDir(fileDir).then(()=>{},console.error);
 
 export class Store extends AbstractService {
 	storeApi: any;
@@ -213,16 +214,17 @@ export class Store extends AbstractService {
 
 			// fs.writeFileSync(filePath, 'afdsafdsa');
 			// return 1;
+			
+			let newFilePath=path.dirname(req.files.file.path);
+			newFilePath=path.join(newFilePath,'/')+req.files.file.name;
+			fs.renameSync(req.files.file.path,newFilePath);
 			const retsult = await this.storeApi.getFileUploadTxHash(
 				params.mnemonic,
-				req.files.file.path,
+				newFilePath,
 				params.backups,
 				params.downloadfee,
 				params.privatekey
 			);
-			let newFilePath=path.dirname(req.files.file.path);
-			newFilePath=path.join(newFilePath,'/')+req.files.file.name;
-			fs.renameSync(req.files.file.path,newFilePath);
 			retsult.filePath=newFilePath;
 			return retsult;
 		} catch (err) {

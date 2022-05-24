@@ -81,15 +81,12 @@ var vm = new Vue({
 			let url = currAPI.url;
 			const fd = new FormData();
 			if (currAPI.avgs) {
-				const arr=[];
+				const arr = [];
+				let err = [];
 				currAPI.avgs.forEach((t) => {
-					const value=t.value;
-					if(t.must&&value===''){
-						return This.$message({
-							showClose: true,
-							message:  t.key+' is required.',
-							type: 'error',
-						});
+					const value = t.value;
+					if (t.must && value === '') {
+						err.push(t.key + ' is required.');
 					}
 					if (currAPI.method == 'get') {
 						arr.push(t.key + '=' + value);
@@ -97,6 +94,13 @@ var vm = new Vue({
 						fd.append(t.key, t.value);
 					}
 				});
+				if (err.length > 0) {
+					return This.$message({
+						showClose: true,
+						message: err.join(';'),
+						type: 'error',
+					});
+				}
 				url += '?' + arr.join('&');
 			}
 			console.log('start request...');

@@ -20,6 +20,7 @@ tags:
 - name: transaction
 - name: paras
 - name: trace
+- name: store
 paths:
   /accounts/{accountId}/asset-balances:
     get:
@@ -1313,22 +1314,114 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlocksTraceOperations'
+  /store/find/price:
+    get:
+      tags:
+      - store
+      summary: |
+        find curr price.      
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/purchasedSpace/{walletAddress}:
+    get:
+      tags:
+      - store
+      summary: |
+        find purchasedSpace by walletAddress.  
+      parameters:
+      - name: walletAddress
+        in: path
+        description: The walletAddress.
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/file/{fileId}:
+    get:
+      tags:
+      - store
+      summary: |
+        find file with fileId.  
+      parameters:
+      - name: fileId
+        in: path
+        description: The fileId.
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/fileList/{walletAddress}:
+    get:
+      tags:
+      - store
+      summary: |
+        find curr price.  
+      parameters:
+      - name: walletAddress
+        in: path
+        description: The walletAddress.
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/upload:
+    post:
+      tags:
+      - store
+      summary: |
+        upload a file.  
+      operationId: submitTransaction
+      requestBody:
+        $ref: '#/components/schemas/upload'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
 components:
   schemas:
-    AccountAssetsApproval:
-      type: object
+    storeRes:
+      result:
+          type: object
+          description: The result.
+          format: object    
+    upload:
       properties:
-        at:
-          $ref: '#/components/schemas/BlockIdentifiers'
-        amount:
+        txHash:
           type: string
-          description: The amount of funds approved for the balance transfer from the owner
-            to some delegated target.
+          description: Use offline sign api make
           format: unsignedInteger
-        deposit:
+        filePath:
           type: string
-          description: The amount reserved on the owner's account to hold this item in storage.
+          description: The will upload file path.
           format: unsignedInteger
+        fileid:
+          type: string
+          description: File id.
+          format: unsignedInteger
+        privatekey:
+          type: string
+          description: Encrypt password.
+          format: unsignedInteger        
     AccountAssetsBalances:
       type: object
       properties:

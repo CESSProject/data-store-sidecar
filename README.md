@@ -158,15 +158,27 @@ and then set the enviroment variable to point to your definitions:
 export SAS_SUBSTRATE_TYPES=/path/to/my-chains-types.json
 ```
 
-
 ## Data Store API
 
 Supports rich channels for interacting with the chain, if your network integrates the [data store pallet](https://github.com/CESSProject/data-store-pallet), then you will be able to use the CESS storage service.
 
 [Click here for full endpoint docs.](https://example-datastore.cess.cloud/docs)
 
+## CESS Storage
+
+Currently, we provide several storage APIs. You can use it to upload and download files.
+
+See the store section of the [API docs](https://example-datastore.cess.cloud/docs) to learn more.
+
+
 ## Docker
 
+
+## Test
+
+```
+yarn test
+```
 
 ## Hardware requirements
 

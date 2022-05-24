@@ -8,7 +8,7 @@ import fs from 'fs';
 import makeDir from 'make-dir';
 import path from 'path';
 import { FileStorage } from 'cess-js-sdk';
-import { SidecarConfig } from '../../SidecarConfig';
+// import { SidecarConfig } from '../../SidecarConfig';
 import { ParamsDictionary } from 'express-serve-static-core';
 
 const fileDir = path.join(__dirname, '../../../../public/upload-file/');
@@ -18,7 +18,7 @@ export class Store extends AbstractService {
 	storeApi: any;
 	constructor(api: ApiPromise) {
 		const storeApi = new FileStorage({
-			nodeURL: SidecarConfig.config.SUBSTRATE.WS_URL,
+			nodeURL: 'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
 			keyringOption: { type: 'sr25519', ss58Format: 42 },
 		});
 		super(api);
@@ -146,11 +146,15 @@ export class Store extends AbstractService {
 	async download(params: ParamsDictionary): Promise<any> {
 		try {
 			const fileId = params.fileId;
-			const fileDownPath=await this.storeApi.fileDownload(fileId, fileDir, params.privatekey);
-			const url='/upload-file/'+path.basename(fileDownPath);
+			const fileDownPath = await this.storeApi.fileDownload(
+				fileId,
+				fileDir,
+				params.privatekey
+			);
+			const url = '/upload-file/' + path.basename(fileDownPath);
 			return {
-				path:fileDownPath,
-				url
+				path: fileDownPath,
+				url,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);

@@ -158,50 +158,12 @@ and then set the enviroment variable to point to your definitions:
 export SAS_SUBSTRATE_TYPES=/path/to/my-chains-types.json
 ```
 
-### Logging
 
-- `SAS_LOG_LEVEL`: the lowest priority log level to surface, defaults to `info`. Tip: set to `http`
-    to see all HTTP requests.
-- `SAS_LOG_JSON`: wether or not to have logs formatted as JSON, defaults to `false`.
-    Useful when using `stdout` to programmatically process Sidecar log data.
-- `SAS_LOG_FILTER_RPC`: wether or not to filter polkadot-js API-WS RPC logging, defaults to `false`.
-- `SAS_LOG_STRIP_ANSI`: wether or not to strip ANSI characters from logs, defaults
-    to `false`. Useful when logging RPC calls with JSON written to transports.
+## Data Store API
 
-#### Log levels
-
-Log levels in order of decreasing importance are: `error`, `warn`, `info`, `http`, `verbose`, `debug`, `silly`.
-
-| http status code range | log level |
-|------------------------|-----------|
-| `code` < 400           | `http`    |
-| 400 <= `code` < 500    | `warn`    |
-| 500 < `code`           | `error`   |
-
-#### RPC logging
-
-If looking to track raw RPC requests/responses, one can use `yarn start:log-rpc` to turn on polkadot-js's
-logging. It is recommended to also set `SAS_LOG_STRIP_ANSI=true` to increase the readability of the logging stream.
-
-**N.B.** If running `yarn start:log-rpc`, the NODE_ENV will be set to `test`. In order still run your `.env`
-file you can `symlink` it with `.env.test`. For example you could run
-`ln -s .env.myEnv .env.test && yarn start:log-rpc` to use `.env.myEnv` to set ENV variables. (see linux
-commands `ln` and `unlink` for more info.)
-
-## Debugging fee and payout calculations
-
-It is possible to get more information about the fee and payout calculation process logged to
-the console. Because this fee calculation happens in the statically compiled web assembly part
-a re-compile with the proper environment variable set is necessary:
-
-```bash
-CALC_DEBUG=1 sh calc/build.sh
-```
-
-## Available endpoints
+Supports rich channels for interacting with the chain, if your network integrates the [data store pallet](https://github.com/CESSProject/data-store-pallet), then you will be able to use the CESS storage service.
 
 [Click here for full endpoint docs.](https://example-datastore.cess.cloud/docs)
-
 
 ## Docker
 

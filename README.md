@@ -174,9 +174,10 @@ See the store section of the [API docs](https://example-datastore.cess.cloud/doc
 ## Docker
 
 
-## Test
+## Run Tests
 
-```
+```bash
+# run all the tests
 yarn test
 ```
 

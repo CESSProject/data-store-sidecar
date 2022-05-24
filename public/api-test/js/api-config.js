@@ -64,7 +64,12 @@ const requestAPI=[
                 type: 'string',
                 value: '',
                 must:true
-            }
+            },
+            {
+                key: 'privatekey',
+                type: 'string',
+                value: ''
+            },
         ],
     },
     {
@@ -78,6 +83,11 @@ const requestAPI=[
                 type: 'string',
                 value: '',
                 must:true
+            },
+            {
+                key: 'privatekey',
+                type: 'string',
+                value: ''
             },
         ],
     },
@@ -141,7 +151,12 @@ const offlineSingAPI=[
                 type: 'number',
                 value: '0',
                 must:true
-            }
+            },
+            {
+                key: 'privatekey',
+                type: 'string',
+                value: ''
+            },
         ],
     },
     {

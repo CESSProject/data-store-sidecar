@@ -108,7 +108,7 @@ var vm = new Vue({
 				result = { result };
 			}
 			that.result = JSON.stringify(result, null, 5);
-			if (currAPI.name == 'download') {
+			if (currAPI.name == 'download'&&result.url) {
 				This.$alert(
 					'<a target="_blank" href="' +result.url +'" style="color:blue;" class="fa fa-save"> 文件已经准备好，点此保存</a>',
 					{

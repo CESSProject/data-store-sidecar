@@ -15,20 +15,17 @@ var vm = new Vue({
 			loading: false,
 		},
 	},
-	beforeMount: function () {
-		var that = this;
-	},
-	mounted: function () {
-		var that = this;
-	},
+	beforeMount: function () {},
+	mounted: function () {},
 	methods: {
 		onClick(type) {
 			let that = this;
+			const This = this;
 			if (type == 'offline') {
 				that = this.offlineSign;
 			}
 			if (!that.currAPIName) {
-				return this.$message({
+				return This.$message({
 					showClose: true,
 					message: 'Please select a api method.',
 					type: 'error',
@@ -37,7 +34,7 @@ var vm = new Vue({
 			that.loading = true;
 			this[that.currAPI.fun](type).then(
 				(t) => {
-					that.loading = false;
+					that.loading = false;					
 				},
 				(e) => {
 					that.result = JSON.stringify(e);
@@ -111,6 +108,15 @@ var vm = new Vue({
 				result = { result };
 			}
 			that.result = JSON.stringify(result, null, 5);
+			if (currAPI.name == 'download') {
+				This.$alert(
+					'<a target="_blank" href="' +result.url +'" style="color:blue;" class="fa fa-save"> 文件已经准备好，点此保存</a>',
+					{
+						dangerouslyUseHTMLString: true,
+					}
+				);
+			}
+			return result;
 		},
 	},
 });

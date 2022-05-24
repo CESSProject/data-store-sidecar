@@ -11,8 +11,8 @@ import { FileStorage } from 'cess-js-sdk';
 import { SidecarConfig } from '../../SidecarConfig';
 import { ParamsDictionary } from 'express-serve-static-core';
 
-const fileDir = path.join(__dirname, '../../../../upload-file/');
-makeDir(fileDir).then(()=>{},console.error);
+const fileDir = path.join(__dirname, '../../../../public/upload-file/');
+makeDir(fileDir).then(() => {}, console.error);
 
 export class Store extends AbstractService {
 	storeApi: any;
@@ -121,9 +121,13 @@ export class Store extends AbstractService {
 	}
 	async upload(params: ParamsDictionary): Promise<any> {
 		try {
+			let filePath = fileDir + params.fileid;
+			if (!fs.existsSync(filePath)) {
+				throw 'file not found';
+			}
 			const retsult = await this.storeApi.fileUploadWithTxHash(
 				params.txHash,
-				params.filePath,
+				filePath,
 				params.fileid,
 				params.privatekey
 			);
@@ -141,13 +145,12 @@ export class Store extends AbstractService {
 	}
 	async download(params: ParamsDictionary): Promise<any> {
 		try {
-			const retsult = await this.storeApi.fileDownload(
-				params.fileId, 
-				fileDir, 
-				params.privatekey
-			);
+			const fileId = params.fileId;
+			const fileDownPath=await this.storeApi.fileDownload(fileId, fileDir, params.privatekey);
+			const url='/upload-file/'+path.basename(fileDownPath);
 			return {
-				retsult,
+				path:fileDownPath,
+				url
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -214,18 +217,19 @@ export class Store extends AbstractService {
 
 			// fs.writeFileSync(filePath, 'afdsafdsa');
 			// return 1;
-			
-			let newFilePath=path.dirname(req.files.file.path);
-			newFilePath=path.join(newFilePath,'/')+req.files.file.name;
-			fs.renameSync(req.files.file.path,newFilePath);
-			const retsult = await this.storeApi.getFileUploadTxHash(
+
+			let newFilePath = path.dirname(req.files.file.path);
+			newFilePath = path.join(newFilePath, '/') + req.files.file.name;
+			fs.renameSync(req.files.file.path, newFilePath);
+			let retsult = await this.storeApi.getFileUploadTxHash(
 				params.mnemonic,
 				newFilePath,
 				params.backups,
 				params.downloadfee,
 				params.privatekey
 			);
-			retsult.filePath=newFilePath;
+			fs.renameSync(newFilePath, fileDir + retsult.fileid);
+			delete retsult.filePath;
 			return retsult;
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);

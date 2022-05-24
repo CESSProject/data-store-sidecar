@@ -16,6 +16,9 @@ yarn-error.log
 !.yarn/releases
 !.yarn/plugins
 /docs/.yarn
+# public
+/public/upload-file
+/public/docs
 
 # Tests
 /coverage

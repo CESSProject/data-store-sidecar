@@ -15,6 +15,7 @@ const requestAPI=[
                 key: 'walletAddress',
                 type: 'string',
                 value: '',
+                must:true
             },
         ],
     },
@@ -28,6 +29,7 @@ const requestAPI=[
                 key: 'fileId',
                 type: 'string',
                 value: '',
+                must:true
             },
         ],
     },
@@ -41,6 +43,7 @@ const requestAPI=[
                 key: 'walletAddress',
                 type: 'string',
                 value: '',
+                must:true
             },
         ],
     },
@@ -54,16 +57,19 @@ const requestAPI=[
                 key: 'txHash',
                 type: 'string',
                 value: '',
+                must:true
             },
             {
                 key: 'filePath',
                 type: 'string',
                 value: '',
+                must:true
             },
             {
                 key: 'fileid',
                 type: 'string',
                 value: '',
+                must:true
             },
             {
                 key: 'privatekey',
@@ -82,11 +88,12 @@ const requestAPI=[
                 key: 'fileId',
                 type: 'string',
                 value: '',
+                must:true
             },
             {
                 key: 'privatekey',
                 type: 'string',
-                value: '',
+                value: ''
             },
         ],
     },
@@ -100,6 +107,7 @@ const requestAPI=[
                 key: 'txHash',
                 type: 'string',
                 value: '',
+                must:true
             },
         ],
     },
@@ -113,6 +121,7 @@ const requestAPI=[
                 key: 'txHash',
                 type: 'string',
                 value: '',
+                must:true
             }
         ],
     }
@@ -129,21 +138,25 @@ const offlineSingAPI=[
                 key: 'mnemonic',
                 type: 'string',
                 value: '',
+                must:true
             },
             {
                 key: 'file',
                 type: 'file',
                 value: '',
+                must:true
             },
             {
                 key: 'backups',
                 type: 'number',
                 value: '1',
+                must:true
             },
             {
                 key: 'downloadfee',
                 type: 'number',
                 value: '0',
+                must:true
             },
             {
                 key: 'privatekey',
@@ -162,11 +175,13 @@ const offlineSingAPI=[
                 key: 'mnemonic',
                 type: 'string',
                 value: '',
+                must:true
             },
             {
                 key: 'fileId',
                 type: 'string',
                 value: '',
+                must:true
             },
         ],
     },
@@ -180,21 +195,25 @@ const offlineSingAPI=[
                 key: 'mnemonic',
                 type: 'string',
                 value: '',
+                must:true
             },
             {
                 key: 'spaceCount',
                 type: 'number',
                 value: '1',
+                must:true
             },
             {
                 key: 'leaseCount',
                 type: 'number',
                 value: '1',
+                must:true
             },
             {
-                key: 'fileId',
+                key: 'maxPrice',
                 type: 'number',
                 value: '0',
+                must:true
             },
         ],
     }

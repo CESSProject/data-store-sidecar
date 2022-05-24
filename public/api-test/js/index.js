@@ -5,12 +5,14 @@ var vm = new Vue({
 		currAPI: '',
 		apis: requestAPI,
 		result: '',
+		loading: false,
 		offlineSign: {
 			file: null,
 			currAPIName: '',
 			currAPI: '',
 			apis: offlineSingAPI,
 			result: '',
+			loading: false,
 		},
 	},
 	beforeMount: function () {
@@ -32,8 +34,11 @@ var vm = new Vue({
 					type: 'error',
 				});
 			}
+			that.loading = true;
 			this[that.currAPI.fun](type).then(
-				(t) => {},
+				(t) => {
+					that.loading = false;
+				},
 				(e) => {
 					that.result = JSON.stringify(e);
 				}
@@ -68,6 +73,7 @@ var vm = new Vue({
 		},
 		async commonGet(type) {
 			let that = this;
+			const This = this;
 			if (type == 'offline') {
 				that = this.offlineSign;
 			}
@@ -75,14 +81,23 @@ var vm = new Vue({
 			let url = currAPI.url;
 			const fd = new FormData();
 			if (currAPI.avgs) {
-				if (currAPI.method == 'get') {
-					let arr = currAPI.avgs.map((t) => t.key + '=' + t.value);
-					url += '?' + arr.join('&');
-				} else {
-					currAPI.avgs.forEach((t) => {
+				const arr=[];
+				currAPI.avgs.forEach((t) => {
+					const value=t.value;
+					if(t.must&&value===''){
+						return This.$message({
+							showClose: true,
+							message:  t.key+' is required.',
+							type: 'error',
+						});
+					}
+					if (currAPI.method == 'get') {
+						arr.push(t.key + '=' + value);
+					} else {
 						fd.append(t.key, t.value);
-					});
-				}
+					}
+				});
+				url += '?' + arr.join('&');
 			}
 			console.log('start request...');
 			const result = await ajax(currAPI.method, url, fd);
@@ -91,7 +106,7 @@ var vm = new Vue({
 			if (typeof result != 'object') {
 				result = { result };
 			}
-			that.result = JSON.stringify(result,null,5);
+			that.result = JSON.stringify(result, null, 5);
 		},
 	},
 });

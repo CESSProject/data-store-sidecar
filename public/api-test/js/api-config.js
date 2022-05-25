@@ -64,7 +64,12 @@ const requestAPI=[
                 type: 'string',
                 value: '',
                 must:true
-            }
+            },
+            {
+                key: 'privatekey',
+                type: 'string',
+                value: ''
+            },
         ],
     },
     {
@@ -78,6 +83,11 @@ const requestAPI=[
                 type: 'string',
                 value: '',
                 must:true
+            },
+            {
+                key: 'privatekey',
+                type: 'string',
+                value: ''
             },
         ],
     },
@@ -97,7 +107,7 @@ const requestAPI=[
     },
     {
         method: 'post',
-        name: 'expansion',
+        name: 'expansion（buy space）',
         fun: 'commonGet',
         url: '/store/space/expansion',
         avgs: [
@@ -107,6 +117,20 @@ const requestAPI=[
                 value: '',
                 must:true
             }
+        ],
+    },
+    {
+        method: 'post',
+        name: 'get public key',
+        fun: 'commonGet',
+        url: '/store/faucet/publickey',
+        avgs: [
+            {
+                key: 'addr',
+                type: 'string',
+                value: '',
+                must:true
+            },
         ],
     }
 ]
@@ -141,7 +165,12 @@ const offlineSingAPI=[
                 type: 'number',
                 value: '0',
                 must:true
-            }
+            },
+            {
+                key: 'privatekey',
+                type: 'string',
+                value: ''
+            },
         ],
     },
     {
@@ -166,7 +195,7 @@ const offlineSingAPI=[
     },
     {
         method: 'post',
-        name: 'expansion',
+        name: 'expansion（buy space）',
         fun: 'commonGet',
         url: '/store/tx/getExpansionTxHash',
         avgs: [

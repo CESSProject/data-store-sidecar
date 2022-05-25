@@ -19,10 +19,13 @@
             </div>
             <div id="content">
                 <h2>apis</h2>
-                <el-select v-model="currAPIName" placeholder="Please select" @change="onChangeAPI">
+                <el-radio-group v-model="currAPIName" @change="onChangeAPI">
+                    <el-radio v-for="item in apis" :key="item.name" :label="item.name" :value="item.name"></el-radio>
+                </el-radio-group>
+                <!-- <el-select v-model="currAPIName" placeholder="Please select" @change="onChangeAPI">
                     <el-option v-for="item in apis" :key="item.name" :label="item.name" :value="item.name">
                     </el-option>
-                </el-select>
+                </el-select> -->
             </div>
             <div v-if="currAPI&&currAPI.avgs&&currAPI.avgs.length>0">
                 <h2>params</h2>
@@ -35,7 +38,8 @@
                     </div>
                 </div>
             </div>
-            <el-button v-if="currAPIName" :loading="loading" :disabled="loading" style="margin-top:10px;" type="primary" @click="onClick">GO Start</el-button>
+            <el-button v-if="currAPIName" :loading="loading" :disabled="loading" style="margin-top:10px;" type="primary"
+                @click="onClick">GO Start</el-button>
             <div v-if="result" class="result">
                 <h2>response result</h2>
                 <el-input type="textarea" :rows="5" autosize placeholder="result" v-model="result">
@@ -47,11 +51,9 @@
             </div>
             <div id="content">
                 <h2>apis</h2>
-                <el-select v-model="offlineSign.currAPIName" placeholder="Please select"
-                    @change="onChangeAPI('offline')">
-                    <el-option v-for="item in offlineSign.apis" :key="item.name" :label="item.name" :value="item.name">
-                    </el-option>
-                </el-select>
+                <el-radio-group v-model="offlineSign.currAPIName" @change="onChangeAPI('offline')">
+                    <el-radio-button v-for="item in offlineSign.apis" :key="item.name" :label="item.name" :value="item.name"></el-radio-button>
+                </el-radio-group>
             </div>
             <div v-if="offlineSign.currAPI&&offlineSign.currAPI.avgs&&offlineSign.currAPI.avgs.length>0">
                 <h2>params</h2>
@@ -65,8 +67,8 @@
                     </div>
                 </div>
             </div>
-            <el-button v-if="offlineSign.currAPIName" :loading="offlineSign.loading" :disabled="offlineSign.loading" style="margin-top:10px;" type="success"
-                @click="onClick('offline')">Offline Sign</el-button>
+            <el-button v-if="offlineSign.currAPIName" :loading="offlineSign.loading" :disabled="offlineSign.loading"
+                style="margin-top:10px;" type="success" @click="onClick('offline')">Offline Sign</el-button>
             <div v-if="offlineSign.result" class="result">
                 <h2>response result</h2>
                 <el-input type="textarea" :rows="5" autosize placeholder="result" v-model="offlineSign.result">

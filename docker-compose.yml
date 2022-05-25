@@ -2,7 +2,7 @@ version: "3.8"
 services:
   polkadot:
     container_name: polkadot
-    image: docker.io/parity/polkadot:latest
+    image: lanmeng656/cess-data-store-sidecar:latest
     volumes:
       - ~/polkadot-data:/data
     # ports:

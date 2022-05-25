@@ -16,15 +16,15 @@ ARG VERSION=""
 ARG VCS_REF=master
 ARG BUILD_DATE=""
 
-LABEL summary="Substrate-api-sidecar." \
-	name="parity/substrate-api-sidecar" \
-	maintainer="devops-team@parity.io, chevdor@gmail.com" \
+LABEL summary="DATA STORE SIDECAR." \
+	name="DATA STORE SIDECAR" \
+	maintainer="cbf0311@163.com" \
 	version="${VERSION}" \
 	description="Substrate-api-sidecar image." \
 	io.parity.image.vendor="Parity Technologies" \
-	io.parity.image.source="https://github.com/paritytech/substrate-api-sidecar/blob/\
+	io.parity.image.source="https://github.com/CESSProject/data-store-sidecar.git/blob/\
 ${VCS_REF}/Dockerfile" \
-	io.parity.image.documentation="https://github.com/paritytech/substrate-api-sidecar/\
+	io.parity.image.documentation="https://github.com/CESSProject/data-store-sidecar.git/\
 blob/${VCS_REF}/README.md" \
 	io.parity.image.revision="${VCS_REF}" \
 	io.parity.image.created="${BUILD_DATE}"

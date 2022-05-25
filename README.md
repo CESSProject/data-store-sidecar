@@ -3,9 +3,6 @@
   <h1 align="center">DATA STORE SIDECAR</h1>
   
   [![GitHub license](https://img.shields.io/badge/license-Apache2-blue)](#LICENSE) 
-  <a href="https://www.npmjs.com/package/@substrate/api-sidecar">
-      <img alt="npm" src="https://img.shields.io/npm/v/@substrate/api-sidecar" />
-    </a>
 
 **REST service that makes it easy to interact with blockchain nodes built using Substrate's FRAME framework and obtain object storage service through CESS network.**
 

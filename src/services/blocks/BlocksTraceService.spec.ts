@@ -58,6 +58,6 @@ describe('BlocksTraceService', () => {
 			).toMatchObject(operationsResponse);
 		});
 
-		it.todo('works when ApiPromise works (with `actions`)');
+		// it.todo('works when ApiPromise works (with `actions`)');
 	});
 });

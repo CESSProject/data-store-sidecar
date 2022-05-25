@@ -42,6 +42,9 @@ export class Store extends AbstractService {
 	async purchasedSpace(params: ParamsDictionary): Promise<any> {
 		try {
 			console.log(params);
+			if(!params.walletAddress){
+				throw 'walletAddress is required.'
+			}
 			const retsult = await this.storeApi.findPurchasedSpace(
 				params.walletAddress
 			);
@@ -60,6 +63,9 @@ export class Store extends AbstractService {
 	async file(params: ParamsDictionary): Promise<any> {
 		try {
 			console.log(params);
+			if(!params.fileId){
+				throw 'fileId is required.'
+			}
 			const retsult = await this.storeApi.findFile(params.fileId);
 			return {
 				retsult,
@@ -76,6 +82,9 @@ export class Store extends AbstractService {
 	async fileList(params: ParamsDictionary): Promise<any> {
 		try {
 			console.log(params);
+			if(!params.walletAddress){
+				throw 'walletAddress is required.'
+			}
 			const retsult = await this.storeApi.findFileList(params.walletAddress);
 			return {
 				retsult,
@@ -91,6 +100,9 @@ export class Store extends AbstractService {
 	}
 	async delete(params: ParamsDictionary): Promise<any> {
 		try {
+			if(!params.txHash){
+				throw 'txHash is required.'
+			}
 			const retsult = await this.storeApi.fileDeleteWithTxHash(params.txHash);
 			return {
 				retsult,
@@ -106,6 +118,9 @@ export class Store extends AbstractService {
 	}
 	async expansion(params: ParamsDictionary): Promise<any> {
 		try {
+			if(!params.txHash){
+				throw 'txHash is required.'
+			}
 			const retsult = await this.storeApi.expansionWithTxHash(params.txHash);
 			return {
 				retsult,
@@ -205,23 +220,6 @@ export class Store extends AbstractService {
 	}
 	async getUploadTxHash(params: ParamsDictionary, req: any): Promise<any> {
 		try {
-			// let fileName = 'a.txt';
-			// const fileDir = path.join(__dirname, '../../../file/');
-			// await makeDir(fileDir);
-
-			// console.log('fileDir', fileDir);
-			console.log('req.fields', req.fields);
-			console.log('req.files', req.files);
-
-			// const read = fs.createReadStream(req.files.file.path);
-			// fileName=req.files.file.name;
-			// const filePath = fileDir + fileName;
-			// let write = fs.createWriteStream(filePath);
-			// read.pipe(write);
-
-			// fs.writeFileSync(filePath, 'afdsafdsa');
-			// return 1;
-
 			let newFilePath = path.dirname(req.files.file.path);
 			newFilePath = path.join(newFilePath, '/') + req.files.file.name;
 			fs.renameSync(req.files.file.path, newFilePath);

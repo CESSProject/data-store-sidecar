@@ -107,7 +107,7 @@ const requestAPI=[
     },
     {
         method: 'post',
-        name: 'expansion',
+        name: 'expansion（buy space）',
         fun: 'commonGet',
         url: '/store/space/expansion',
         avgs: [
@@ -181,7 +181,7 @@ const offlineSingAPI=[
     },
     {
         method: 'post',
-        name: 'expansion',
+        name: 'expansion（buy space）',
         fun: 'commonGet',
         url: '/store/tx/getExpansionTxHash',
         avgs: [

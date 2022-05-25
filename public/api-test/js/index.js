@@ -1,14 +1,14 @@
 var vm = new Vue({
 	el: '#app',
 	data: {
-		currAPIName: '',
+		currAPIName: 'findPrice',
 		currAPI: '',
 		apis: requestAPI,
 		result: '',
 		loading: false,
 		offlineSign: {
 			file: null,
-			currAPIName: '',
+			currAPIName: 'upload',
 			currAPI: '',
 			apis: offlineSingAPI,
 			result: '',
@@ -16,7 +16,10 @@ var vm = new Vue({
 		},
 	},
 	beforeMount: function () {},
-	mounted: function () {},
+	mounted: function () {
+		this.onChangeAPI();
+		this.onChangeAPI('offline');
+	},
 	methods: {
 		onClick(type) {
 			let that = this;
@@ -34,7 +37,7 @@ var vm = new Vue({
 			that.loading = true;
 			this[that.currAPI.fun](type).then(
 				(t) => {
-					that.loading = false;					
+					that.loading = false;
 				},
 				(e) => {
 					that.result = JSON.stringify(e);
@@ -108,9 +111,11 @@ var vm = new Vue({
 				result = { result };
 			}
 			that.result = JSON.stringify(result, null, 5);
-			if (currAPI.name == 'download'&&result.url) {
+			if (currAPI.name == 'download' && result.url) {
 				This.$alert(
-					'<a target="_blank" href="' +result.url +'" style="color:blue;" class="fa fa-save"> The file is ready. Click here to save</a>',
+					'<a target="_blank" href="' +
+						result.url +
+						'" style="color:blue;" class="fa fa-save"> The file is ready. Click here to save</a>',
 					{
 						dangerouslyUseHTMLString: true,
 					}

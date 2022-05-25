@@ -12,6 +12,9 @@ body{
     background-color:#000;
     color:#fff;
 }
+.el-radio{
+    line-height: 2.5!important;
+}
 h2{
     line-height: 40px;
     margin-top: 10px;

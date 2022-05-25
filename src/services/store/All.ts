@@ -244,6 +244,9 @@ export class Store extends AbstractService {
 	}
 	async publickey(params: ParamsDictionary): Promise<any> {
 		try {
+			if(!params.addr){
+				throw 'addr is required.'
+			}
 			const pair = this.storeApi.keyring.addFromAddress(params.addr);
 			const retsult= "0x" +Array.from(pair.publicKey, (i:any) => i.toString(16).padStart(2, "0")).join("");
 			return {retsult};

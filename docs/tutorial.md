@@ -1,10 +1,18 @@
 # Example demonstration of data store sidecar
 
-this example demonstration explains How to use it to connect to the storage service of the CESS network. Simply put, it is a tutorial on basic operations such as uploading and downloading object files.
+this example demonstration explains How to use data store sidecar to connect to the storage service of the CESS network. Simply put, it is a tutorial on basic operations such as uploading and downloading object files.
 
 ## Introduction
 
 Data store pallet realizes the features of recording and management of stored data. It implements functions related to meta-data such as _store_, _retrieve_, _replace_, _delete_ and _edit_, _query_. This is a regular-spec Pallet, and any Substrate Node can easily import it and get the above features. Generally speaking, if you want to get a complete data storage service, in addition to integrating this module, you also need to use the **Custom-built Storage Sidecar**, which is under development. 
+
+After the data store pallet is complete, we next implement the data store sidecar. Their workflow can be clearly seen from the diagram below.
+
+The data store sidecar inherits the function of the substrate sidecar, which is to provide the Rest API with the blockchain network developed based on substrate. Of course, if the network's Runtime integrates the data store pallet, we can call it.
+
+In addition to this, we also embedded the CESS storage service API in the data store sidecar. That is to say, we can directly use the API of the data store sidecar to connect to the CESS storage service.
+
+It is worth mentioning that in the stage of milestone 2, we will only implement the embedding of storage services. The data store pallet has not yet been integrated with the CESS storage service, which is the task of milestone 3.
 
 # ![Figure 1: Typical example process](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/substrate-builder-program/10.svg)
 

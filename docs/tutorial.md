@@ -4,11 +4,9 @@ this example demonstration explains How to use data store sidecar to connect to 
 
 ## Introduction
 
-Data store pallet realizes the features of recording and management of stored data. It implements functions related to meta-data such as _store_, _retrieve_, _replace_, _delete_ and _edit_, _query_. This is a regular-spec Pallet, and any Substrate Node can easily import it and get the above features. Generally speaking, if you want to get a complete data storage service, in addition to integrating this module, you also need to use the **Custom-built Storage Sidecar**, which is under development. 
+After the [data store pallet](https://github.com/CESSProject/data-store-pallet) is complete, we next implement the data store sidecar. Their workflow can be clearly seen from the diagram below.
 
-After the data store pallet is complete, we next implement the data store sidecar. Their workflow can be clearly seen from the diagram below.
-
-The data store sidecar inherits the function of the substrate sidecar, which is to provide the Rest API with the blockchain network developed based on substrate. Of course, if the network's Runtime integrates the data store pallet, we can call it.
+The data store sidecar inherits the function of the substrate sidecar, which is to provide the Rest API with the blockchain network based on substrate. Of course, we can call those related functions if the network's Runtime integrates the data store pallet.
 
 In addition to this, we also embedded the CESS storage service API in the data store sidecar. That is to say, we can directly use the API of the data store sidecar to connect to the CESS storage service.
 
@@ -16,9 +14,15 @@ It is worth mentioning that in the stage of milestone 2, we will only implement 
 
 # ![Figure 1: Typical example process](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/substrate-builder-program/10.svg)
 
-As shown in Figure 1 above, the **data store pallet** is responsible for managing the meta information of the stored data, while the source data will be stored on CESS via the **Custom-built Storage Sidecar**.
+Now, let's turn our attention to how to use the **CESS storage service** through the **data store sidecar**.
 
-Now let's see how the data store pallet works.
+## Before the start
+
+In order to test the code more conveniently, we have done the following preparations in advance.
+
+1. Runs and maintains a testnet that integrates the data store pallet, and its RPC link is: wss://example-datastore.cess.cloud/ws/.
+2. Started a demo of the data store sidecar, that is https://example-datastore.cess.cloud , and see [API docs](https://example-datastore.cess.cloud/docs).
+3. Developed a [front-end page]() to test the API service of the demo.
 
 ## Demonstration of function Interface
 

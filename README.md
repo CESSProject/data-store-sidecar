@@ -9,47 +9,59 @@
 
 *The data-store-sidecar is one of the components of the data storage service based on the stable version of the [Substrate API Sidecar](https://github.com/paritytech/substrate-api-sidecar) designed and implemented by CESS LAB. See [CIP-1](https://github.com/CESSProject/CIPs/blob/main/CIP-1.md) for its design scheme, and it has been included in [W3F Grants Program-ces_data_store](https://github.com/w3f/Grants-Program/blob/master/applications/ces_data_store.md).*
 
-## NPM package installation and usage
+## Source code installation and usage
 
-### Global installation
-
-Install the service globally:
+### Clone the code.
 
 ```bash
-npm install -g @substrate/api-sidecar
+git clone https://github.com/CESSProject/data-store-sidecar.git
+```
+
+### Ininstall package
+
+
+```bash
+cd data-store-sidecar
+npm install
+# or
+yarn install
+```
+
+### Build
+
+Build the docs
+```bash
+npm run build:docs
 # OR
-yarn global add @substrate/api-sidecar
+yarn  run build:docs
 ```
-
-Run the service from any directory on your machine:
+Build the ts
 
 ```bash
-substrate-api-sidecar
-```
-
-To check your version you may append the `--version` flag to `substrate-api-sidecar`.
-
-### Local installation
-
-Install the service locally:
-
-```bash
-npm install @substrate/api-sidecar
+npm run build
 # OR
-yarn add @substrate/api-sidecar
+yarn  run build
 ```
 
-Run the service from within the local directory:
+### Run express server
 
 ```bash
-node_modules/.bin/substrate-api-sidecar
+npm run start
+# OR
+npm run dev
 ```
 
-### Finishing up
+And then we can open there urls in browser:
 
-[Jump to the configuration section](#configuration) for more details on connecting to a node.
+- API json list [http://localhost:3001](http://localhost:3001)
 
-[Click here for full endpoint docs.](https://example-datastore.cess.cloud/docs)
+- API test tool [http://localhost:3001/api-test](http://localhost:3001/api-test)
+
+- API swagger docs[http://localhost:3001/docs](http://localhost:3001/docs)
+
+or 
+
+- [Click here for full endpoint docs.](https://example-datastore.cess.cloud/docs)
 
 In the full endpoints doc, you will also find the following `trace` related endpoints : 
 - `/experimental/blocks/{blockId}/traces/operations?actions=false`
@@ -63,39 +75,7 @@ To have access to these endpoints you need to :
 
 Currently `BlocksTrace` controller is active in [Polkadot](https://github.com/paritytech/substrate-api-sidecar/blob/ff0cef5eaeeef74f9a931a0355d83fc5ebdea645/src/chains-config/polkadotControllers.ts#L17) and [Kusama](https://github.com/paritytech/substrate-api-sidecar/blob/ff0cef5eaeeef74f9a931a0355d83fc5ebdea645/src/chains-config/kusamaControllers.ts#L17).
 
-## Source code installation and usage
 
-### Quick install
-
-Simply run `yarn`.
-
-### Rust development installation
-
-If you are looking to hack on the `calc` Rust crate make sure your machine has an [up-to-date version of `rustup`](https://www.rust-lang.org/tools/install)
-installed to manage Rust dependencies.
-
-Install `wasm-pack` if your machine does not already have it:
-
-```bash
-cargo install wasm-pack
-```
-
-Use yarn to do the remaining setup:
-
-```bash
-yarn
-```
-
-### Running
-
-```bash
-# For live reload in development
-yarn dev
-
-# To build and run
-yarn build
-yarn start
-```
 
 [Jump to the configuration section](#configuration) for more details on connecting to a node.
 

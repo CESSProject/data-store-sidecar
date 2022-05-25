@@ -29,56 +29,56 @@ In order to test the code more conveniently, we have done the following preparat
 
 ### buy storage space
 
-1. We create a transaction and sign it offline to get the tx string firstly.
+**1. We create a transaction and sign it offline to get the tx string firstly.**
 
 # ![Figure 2](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/01.png)
 
-2. We create a transaction and sign it offline to get the tx string firstly.
+**2. Then, as you think. We fill in the newly obtained tx string into the input box on the left and click the start button. If your output is as shown, then congratulations, the space purchase was successful.**
 
 # ![Figure 3](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/02.png)
 
 ### store
 
-Upload file function.
+**1. We can store the file. As shown below now, select the file to store and get the tx string, and fileid.**
 
+# ![Figure 4](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-03.png)
 
-### retrieve
-Check if the caller has permission to get the specified file.
+**2. Similarly, fill in the input box on the left with the obtained tx string and fileid. By the way, please don't forget to select the upload option.**
 
-1. Call _retrieve_ function to get meta-info of target file. Only the data owner has access to it.
-# ![Figure 4](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-pallet/docs/data-store-03.png)
+# ![Figure 5](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-04.png)
 
-2. It gets successful when I call as the data owner.
-# ![Figure 5](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-pallet/docs/data-store-04.png)
-
-### edit
-Support to modify meta-info of the owner's specified file.
-
-1. Call _edit_ function to modify meta-info of the owner's specified file with inputing 1) fileId, 2) newFileName, 3) newKeywords.
-# ![Figure 6](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-pallet/docs/data-store-05.png)
-
-2. See if the updated info on-chain.
-# ![Figure 7](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-pallet/docs/data-store-06.png)
-
-### replace
-Upload and replace old meta-info with new's of stored file on chain.
-
-1. Call _replace_ function to replace meta-info of the owner's specified file with inputing 1) oldFileId, 2) newFileId, 3) fileName, 4) fileSize, 5) keywords.
-# ![Figure 8](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-pallet/docs/data-store-07.png)
-
-2. Check if the replacement is successful.
-# ![Figure 9](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-pallet/docs/data-store-08.png)
 
 ### query
-Query the meta-info of file by fileId and owner.
-# ![Figure 10](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-pallet/docs/data-store-11.png)
+
+**1. At this point, we can check whether the file was uploaded successfully based on the file id.**
+
+# ![Figure 6](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-05.png)
+
+
+_It is a reminder that before downloading the file, please wait a moment (the specific time depends on the size of the uploaded file), especially if you have just uploaded it. Similarly, if you encounter a download failure, please first check that the process you have operated is correct. If everything is correct, then please try again after a while._
+
+### retrieve
+
+**1. Since we do not need to initiate a transaction request to the network to download the file, we only need to fill in the fileid to get it, as below.**
+
+# ![Figure 7](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-06.png)
+
+**2. If everything is ok, you will be able to see the following popup. Please click it and download the file!**
+
+# ![Figure 8](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/7.png)
 
 ### delete
-Delete the meta-info of the specified file, and the caller must be the owner of the file.
 
-1. Call _delete_ function to delete the targeted file by fileId.
-# ![Figure 11](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-pallet/docs/data-store-09.png)
+**When you want to delete a stored file, you can do the following.**
 
-2. Removed all meta information.
-# ![Figure 12](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-pallet/docs/data-store-10.png)
+**1. You can check if the file is already stored, as below shown.**
 
+# ![Figure 9](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-05.png)
+
+**2. Now, we can delete the target file according to the following operations.**
+
+# ![Figure 10](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-08.png)
+
+**3. Want to check if the deletion was successful? Here's what you need.**
+
+# ![Figure 11](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-09.png)

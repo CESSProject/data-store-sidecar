@@ -25,16 +25,22 @@ In order to test the code more conveniently, we have done the following preparat
 3. Developed a [front-end page](https://example-datastore.cess.cloud/api-test/) to test the API service of the demo.
 4. Since you need to conduct transactions on the CESS network, you should first have a Polkadot wallet address and have a certain amount of TCESS (don't worry, you can get it through the [faucet](https://testnet-faucet.cess.cloud)).
 
-## Demonstration of function Interface
+## Demonstration of demo's API service
+
+### buy storage space
+
+1. We create a transaction and sign it offline to get the tx string firstly.
+
+# ![Figure 2](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/01.png)
+
+2. We create a transaction and sign it offline to get the tx string firstly.
+
+# ![Figure 3](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/02.png)
 
 ### store
-Upload meta-info of stored file on chain.
 
-1. Call _store_ function to record meta-info of file on chain with inputing 1) fileId, 2) fileName, 3) fileSize, 4) keywords.
-# ![Figure 2](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-pallet/docs/data-store-01.png)
+Upload file function.
 
-2. Check if the above info on-chain.
-# ![Figure 3](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-pallet/docs/data-store-02.png)
 
 ### retrieve
 Check if the caller has permission to get the specified file.

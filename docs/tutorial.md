@@ -22,7 +22,8 @@ In order to test the code more conveniently, we have done the following preparat
 
 1. Runs and maintains a testnet that integrates the data store pallet, and its RPC link is: wss://example-datastore.cess.cloud/ws/.
 2. Started a demo of the data store sidecar, that is https://example-datastore.cess.cloud , and see [API docs](https://example-datastore.cess.cloud/docs).
-3. Developed a [front-end page]() to test the API service of the demo.
+3. Developed a [front-end page](https://example-datastore.cess.cloud/api-test/) to test the API service of the demo.
+4. Since you need to conduct transactions on the CESS network, you should first have a Polkadot wallet address and have a certain amount of TCESS (don't worry, you can get it through the [faucet](https://testnet-faucet.cess.cloud)).
 
 ## Demonstration of function Interface
 

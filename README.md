@@ -155,6 +155,21 @@ See the store section of the [API docs](https://example-datastore.cess.cloud/doc
 
 ## Docker
 
+### build a image
+```bash
+docker build -t "cess/data-store-sidecar:v1" .
+```
+
+### run in container
+```
+docker run -p 8080:8080 cess/data-store-sidecar:v1
+```
+
+### push image to repository (must login first)
+```
+docker push cess/data-store-sidecar:v1
+```
+
 
 ## Run Tests
 

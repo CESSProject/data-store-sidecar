@@ -1380,15 +1380,111 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/storeRes'
-  /store/upload:
+  /store/file/upload:
     post:
       tags:
       - store
       summary: |
         upload a file.  
-      operationId: submitTransaction
+      operationId: upload
       requestBody:
-        $ref: '#/components/schemas/upload'
+        $ref: '#/components/requestBodies/storeUpload'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/file/download:
+    post:
+      tags:
+      - store
+      summary: |
+        download a file.  
+      operationId: download
+      requestBody:
+        $ref: '#/components/requestBodies/storeDownload'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/file/delete:
+    post:
+      tags:
+      - store
+      summary: |
+        delete a file.  
+      operationId: delete
+      requestBody:
+        $ref: '#/components/requestBodies/storeDelete'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/space/expansion:
+    post:
+      tags:
+      - store
+      summary: |
+        buy space.  
+      operationId: expansion
+      requestBody:
+        $ref: '#/components/requestBodies/storeExpansion'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/tx/getUploadTxHash:
+    post:
+      tags:
+      - store
+      summary: |
+        Offline sign upload transfer.  
+      operationId: getUploadTxHash
+      requestBody:
+        $ref: '#/components/requestBodies/storeSignUpload'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/tx/getDeleteTxHash:
+    post:
+      tags:
+      - store
+      summary: |
+        Offline sign delete transfer.  
+      operationId: getDeleteTxHash
+      requestBody:
+        $ref: '#/components/requestBodies/storeSignDelete'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/tx/getExpansionTxHash:
+    post:
+      tags:
+      - store
+      summary: |
+        Offline sign expansion transfer.  
+      operationId: getExpansionTxHash
+      requestBody:
+        $ref: '#/components/requestBodies/storeSignExpansion'
       responses:
         "200":
           description: successful operation
@@ -1421,7 +1517,85 @@ components:
         privatekey:
           type: string
           description: Encrypt password.
-          format: unsignedInteger        
+          format: unsignedInteger 
+    download:
+      type: object
+      properties:
+        fileId:
+          type: string
+          description: The file id.
+          format: unsignedInteger
+        privatekey:
+          type: string
+          description: Encrypt password.
+          format: unsignedInteger
+    delete:
+      type: object
+      properties:
+        txHash:
+          type: string
+          description: Use offline sign api make
+          format: unsignedInteger
+    expansion:
+      type: object
+      properties:
+        txHash:
+          type: string
+          description: Use offline sign api make
+          format: unsignedInteger   
+    signUpload:
+      type: object
+      properties:
+        mnemonic:
+          type: string
+          description: Your mnemonic.
+          format: unsignedInteger
+        file:
+          type: file
+          description: The select file.
+          format: unsignedInteger
+        backups:
+          type: number
+          description: Backup count.
+          format: unsignedInteger
+        downloadfee:
+          type: number
+          description: Download fee.
+          format: unsignedInteger 
+        privatekey:
+          type: string
+          description: Encrypt password.
+          format: unsignedInteger 
+    signDelete:
+      type: object
+      properties:
+        mnemonic:
+          type: string
+          description: Your mnemonic.
+          format: unsignedInteger
+        fileId:
+          type: string
+          description: File id.
+          format: unsignedInteger
+    signExpansion:
+      type: object
+      properties:
+        mnemonic:
+          type: string
+          description: Your mnemonic.
+          format: unsignedInteger
+        spaceCount:
+          type: number
+          description: The space count.
+          format: unsignedInteger
+        leaseCount:
+          type: number
+          description: The lease count.
+          format: unsignedInteger
+        maxPrice:
+          type: number
+          description: The max price.
+          format: unsignedInteger   
     AccountAssetsBalances:
       type: object
       properties:
@@ -2929,4 +3103,45 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Transaction'
+    storeUpload:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/upload'
+      required: true
+    storeDownload:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/download'
+      required: true
+    storeDelete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/delete'
+      required: true
+    storeExpansion:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/expansion'
+      required: true
+    storeSignUpload:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/signUpload'
+      required: true
+    storeSignDelete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/signDelete'
+      required: true
+    storeSignExpansion:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/signExpansion'
       required: true

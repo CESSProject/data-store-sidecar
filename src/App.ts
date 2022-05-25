@@ -11,6 +11,7 @@ import packageJson from '../package.json';
 import AbstractController from './controllers/AbstractController';
 import { AbstractService } from './services/AbstractService';
 import { IRegisteredRoutes, IRouteInfo } from './types/util';
+import cors from 'cors';
 
 interface IAppConfiguration {
 	controllers: AbstractController<AbstractService>[];
@@ -57,6 +58,7 @@ export default class App {
 		const staticPath = path.join(__dirname, '../../public');
 		console.log('static path:', staticPath);
 		this.app.use(express.static(staticPath));
+		this.app.use(cors());
 	}
 
 	/**

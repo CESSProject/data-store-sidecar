@@ -1749,8 +1749,9 @@ __metadata:
     "@types/morgan": 1.9.3
     "@types/triple-beam": ^1.3.2
     argparse: ^2.0.1
-    cess-js-sdk: ^1.3.5
+    cess-js-sdk: ^1.3.6
     confmgr: 1.0.7
+    cors: ^2.8.5
     express: ^4.17.1
     express-formidable: ^1.2.0
     express-winston: ^4.1.0
@@ -2965,9 +2966,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cess-js-sdk@npm:^1.3.5":
-  version: 1.3.5
-  resolution: "cess-js-sdk@npm:1.3.5"
+"cess-js-sdk@npm:^1.3.6":
+  version: 1.3.7
+  resolution: "cess-js-sdk@npm:1.3.7"
   dependencies:
     "@polkadot/api": ^8.2.1
     bs58: ^5.0.0
@@ -2977,8 +2978,8 @@ __metadata:
     md5-file: ^5.0.0
     protobufjs: ^6.11.2
     short-uuid: ^4.2.0
-    websocket-grpc: ^1.1.4
-  checksum: 654b8edd21dceea52aeac42cd577766ed7e03caccb2ac7568415ece413c3bf4b5c1d41dd748f2bd3fb5f0b72c2622338ef4365c58a009df7072640a0908754b6
+    websocket-grpc: ^1.1.5
+  checksum: 9b00663d0ad8094dd794bf9ac15e8fae825847aa30dbe4cff36360a4da769110d7b05d1ae63a361fdaf488974940493aedb0fe9fa82435d4e603c908e21dacd4
   languageName: node
   linkType: hard
 
@@ -3303,6 +3304,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cors@npm:^2.8.5":
+  version: 2.8.5
+  resolution: "cors@npm:2.8.5"
+  dependencies:
+    object-assign: ^4
+    vary: ^1
+  checksum: ced838404ccd184f61ab4fdc5847035b681c90db7ac17e428f3d81d69e2989d2b680cc254da0e2554f5ed4f8a341820a1ce3d1c16b499f6e2f47a1b9b07b5006
+  languageName: node
+  linkType: hard
+
 "cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
@@ -3558,9 +3569,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.118":
-  version: 1.4.137
-  resolution: "electron-to-chromium@npm:1.4.137"
-  checksum: 639d7b94906efafcf363519c3698eecc44be46755a6a5cdc9088954329978866cc93fbd57e08b97290599b68d5226243d21de9fa50be416b8a5d3fa8fd42c3a0
+  version: 1.4.138
+  resolution: "electron-to-chromium@npm:1.4.138"
+  checksum: 071ae40ede544890a3da8e392affb8b9851e52ad6a2674b4de7ef95da660c66f753844cb3cb1890a26e0cbcb0795a9821402e2adec4b9510ab0f315e124a32e9
   languageName: node
   linkType: hard
 
@@ -6449,9 +6460,9 @@ __metadata:
   linkType: hard
 
 "node-releases@npm:^2.0.3":
-  version: 2.0.4
-  resolution: "node-releases@npm:2.0.4"
-  checksum: b32d6c2032c7b169ae3938b416fc50f123f5bd577d54a79b2ae201febf27b22846b01c803dd35ac8689afe840f8ba4e5f7154723db629b80f359836b6707b92f
+  version: 2.0.5
+  resolution: "node-releases@npm:2.0.5"
+  checksum: e85d949addd19f8827f32569d2be5751e7812ccf6cc47879d49f79b5234ff4982225e39a3929315f96370823b070640fb04d79fc0ddec8b515a969a03493a42f
   languageName: node
   linkType: hard
 
@@ -6513,7 +6524,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object-assign@npm:^4.1.1":
+"object-assign@npm:^4, object-assign@npm:^4.1.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
   checksum: fcc6e4ea8c7fe48abfbb552578b1c53e0d194086e2e6bbbf59e0a536381a292f39943c6e9628af05b5528aa5e3318bb30d6b2e53cadaf5b8fe9e12c4b69af23f
@@ -8308,7 +8319,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vary@npm:~1.1.2":
+"vary@npm:^1, vary@npm:~1.1.2":
   version: 1.1.2
   resolution: "vary@npm:1.1.2"
   checksum: ae0123222c6df65b437669d63dfa8c36cee20a504101b2fcd97b8bf76f91259c17f9f2b4d70a1e3c6bbcee7f51b28392833adb6b2770b23b01abec84e369660b
@@ -8385,22 +8396,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"websocket-grpc@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "websocket-grpc@npm:1.1.4"
+"websocket-grpc@npm:^1.1.5":
+  version: 1.1.5
+  resolution: "websocket-grpc@npm:1.1.5"
   dependencies:
     protobufjs: ^6.11.2
-    websocket-request: ^1.2.1
-  checksum: a28f59c88512dd0b50ca1c2bb58045784d48f4ae076f22a6e1fec8bd8e4a3ed7d8f4b135894959cf3529879c4e63db19ded0cd143f03bdd962923b7fc9972357
+    websocket-request: ^1.2.2
+  checksum: 7beedc1344d28e947d00dfff2583678756e386e7596019e78280e16102d4613abfe8fd2b53384a51ee2bf8490abbaad4187aa5b2518d84f56011a3b89b52c5e1
   languageName: node
   linkType: hard
 
-"websocket-request@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "websocket-request@npm:1.2.1"
+"websocket-request@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "websocket-request@npm:1.2.2"
   dependencies:
     ws: ^8.6.0
-  checksum: 192421a934c1458cfa1564c2895d3ff116b144f783de2cd9a512172b99a86c9eb28226ec1f6cd22fa0e8bd804f6a750da10985b9e30dc4518b8d8be7963f6d01
+  checksum: 44316a27c5e74e1e7c49defcac431287ca9b92172e07fa1e5b337dc0603106e2ff9949532bd02a520fa641d98e49dae019ccb633de844b1be266f9b4e66c547e
   languageName: node
   linkType: hard
 

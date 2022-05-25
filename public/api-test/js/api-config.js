@@ -118,6 +118,20 @@ const requestAPI=[
                 must:true
             }
         ],
+    },
+    {
+        method: 'post',
+        name: 'get public key',
+        fun: 'commonGet',
+        url: '/store/faucet/publickey',
+        avgs: [
+            {
+                key: 'addr',
+                type: 'string',
+                value: '',
+                must:true
+            },
+        ],
     }
 ]
 

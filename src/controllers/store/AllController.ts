@@ -40,6 +40,8 @@ export default class AllController extends AbstractController<Store> {
 		arrPost.push(['tx/getDeleteTxHash', this.postAll]);
 		arrPost.push(['tx/getExpansionTxHash', this.postAll]);
 
+		arrPost.push(['faucet/publickey', this.postAll]);
+
 		this.safeMountAsyncPostHandlers(arrPost);
 	}
 

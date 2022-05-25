@@ -18,7 +18,7 @@ export class Store extends AbstractService {
 	storeApi: any;
 	constructor(api: ApiPromise) {
 		const storeApi = new FileStorage({
-			nodeURL: SidecarConfig.config.SUBSTRATE.WS_URL,//'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
+			nodeURL: SidecarConfig.config.SUBSTRATE.WS_URL, //'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
 			keyringOption: { type: 'sr25519', ss58Format: 42 },
 		});
 		super(api);
@@ -239,6 +239,20 @@ export class Store extends AbstractService {
 			const { cause, stack } = extractCauseAndStack(err);
 			throw {
 				error: 'Unable to fetch upload',
+				cause,
+				stack,
+			};
+		}
+	}
+	async publickey(params: ParamsDictionary): Promise<any> {
+		try {
+			const pair = this.storeApi.keyring.addFromAddress(params.addr);
+			const retsult= "0x" +Array.from(pair.publicKey, (i:any) => i.toString(16).padStart(2, "0")).join("");
+			return {retsult};
+		} catch (err) {
+			const { cause, stack } = extractCauseAndStack(err);
+			throw {
+				error: 'Unable to fetch findFile',
 				cause,
 				stack,
 			};

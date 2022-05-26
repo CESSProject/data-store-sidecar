@@ -41,11 +41,11 @@ In order to test the code more conveniently, we have done the following preparat
 
 **1. We can store the file. As shown below now, select the file to store and get the tx string, and fileid.**
 
-# ![Figure 4](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-03.png)
+# ![Figure 4](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v3-03.png)
 
 **2. Similarly, fill in the input box on the left with the obtained tx string and fileid. By the way, please don't forget to select the upload option.**
 
-# ![Figure 5](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-04.png)
+# ![Figure 5](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v3-04.png)
 
 
 ### query
@@ -65,7 +65,7 @@ _It is a reminder that before downloading the file, please wait a moment (the sp
 
 **2. If everything is ok, you will be able to see the following popup. Please click it and download the file!**
 
-# ![Figure 8](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/7.png)
+# ![Figure 8](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v3-07.png)
 
 ### delete
 

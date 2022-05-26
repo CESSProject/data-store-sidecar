@@ -1,4 +1,5 @@
-var vm = new Vue({
+let timeout=null;
+const vm = new Vue({
 	el: '#app',
 	data: {
 		currAPIName: 'findPrice',
@@ -6,6 +7,7 @@ var vm = new Vue({
 		apis: requestAPI,
 		result: '',
 		loading: false,
+		fileDownloadUrl: '',
 		offlineSign: {
 			file: null,
 			currAPIName: 'upload',
@@ -34,6 +36,7 @@ var vm = new Vue({
 					type: 'error',
 				});
 			}
+			that.result='request sending...';
 			that.loading = true;
 			this[that.currAPI.fun](type).then(
 				(t) => {
@@ -80,6 +83,7 @@ var vm = new Vue({
 			const currAPI = that.currAPI;
 			let url = currAPI.url;
 			const fd = new FormData();
+			that.result='requsting...';
 			if (currAPI.avgs) {
 				const arr = [];
 				let err = [];
@@ -95,6 +99,7 @@ var vm = new Vue({
 					}
 				});
 				if (err.length > 0) {
+					that.result=err.join(';');
 					return This.$message({
 						showClose: true,
 						message: err.join(';'),
@@ -112,14 +117,11 @@ var vm = new Vue({
 			}
 			that.result = JSON.stringify(result, null, 5);
 			if (currAPI.name == 'download' && result.url) {
-				This.$alert(
-					'<a target="_blank" href="' +
-						result.url +
-						'" style="color:blue;" class="fa fa-save"> The file is ready. Click here to save</a>',
-					{
-						dangerouslyUseHTMLString: true,
-					}
-				);
+				that.fileDownloadUrl = result.url;
+				clearTimeout(timeout);
+				timeout=setTimeout(() => {
+					that.fileDownloadUrl = '';
+				}, 10000);
 			}
 			return result;
 		},

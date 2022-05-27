@@ -42,12 +42,11 @@
                 @click="onClick">GO Start</el-button>
             <div v-if="result" class="result">
                 <h2>response result</h2>
-                <el-input type="textarea" :rows="5" autosize placeholder="result" v-model="result">
-                    <a target="_blank" v-if="fileDownloadUrl" :href="fileDownloadUrl">
-                        <el-alert title="The file is ready. Click here to save" type="success" effect="dark"
-                            show-icon>
-                        </el-alert>
-                    </a>
+                <el-input type="textarea" :rows="5" autosize placeholder="result" v-model="result" />
+                <a target="_blank" v-if="fileDownloadUrl" :href="fileDownloadUrl">
+                    <el-alert title="The file is ready. Click here to save" type="success" effect="dark" show-icon>
+                    </el-alert>
+                </a>
             </div>
         </el-card>
         <el-card class="box-card">
@@ -90,7 +89,7 @@
     <script src="js/common.js" charset="utf-8"></script>
     <script src="js/layui/layui.js" charset="utf-8"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script src="js/index.js?v=1" charset="utf-8"></script>
+    <script src="js/index.js?v=2" charset="utf-8"></script>
 </body>
 
 </html>

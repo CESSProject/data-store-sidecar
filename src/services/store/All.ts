@@ -8,7 +8,7 @@ import fs from 'fs';
 import makeDir from 'make-dir';
 import path from 'path';
 import { FileStorage } from 'cess-js-sdk';
-// import { SidecarConfig } from '../../SidecarConfig';
+import { SidecarConfig } from '../../SidecarConfig';
 import { ParamsDictionary } from 'express-serve-static-core';
 
 const fileDir = path.join(__dirname, '../../../../public/upload-file/');
@@ -18,7 +18,7 @@ export class Store extends AbstractService {
 	storeApi: any;
 	constructor(api: ApiPromise) {
 		const storeApi = new FileStorage({
-			nodeURL:'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
+			nodeURL:SidecarConfig.config.SUBSTRATE.WS_URL,//'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
 			keyringOption: { type: 'sr25519', ss58Format: 42 },
 		});
 		super(api);

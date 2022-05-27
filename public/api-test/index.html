@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="js/layui/css/layui.css" media="all" />
     <link rel="stylesheet" href="js/font-awesome-4.7.0/css/font-awesome.min.css" media="all" />
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/element.css">
     <link rel="stylesheet" href="css/index.css" media="all" />
 </head>
 
@@ -43,7 +43,14 @@
             <div v-if="result" class="result">
                 <h2>response result</h2>
                 <el-input type="textarea" :rows="5" autosize placeholder="result" v-model="result" />
-                <a target="_blank" v-if="fileDownloadUrl" :href="fileDownloadUrl">
+                <a target="_blank" :href="fileDownloadUrl">
+                    <el-alert title="The file is ready. Click here to save" type="success" effect="dark" show-icon>
+                    </el-alert>
+                </a>
+            </div>
+            <div v-if="fileDownloadUrl" class="result">
+                <h2>download link</h2>
+                <a target="_blank" :href="fileDownloadUrl">
                     <el-alert title="The file is ready. Click here to save" type="success" effect="dark" show-icon>
                     </el-alert>
                 </a>
@@ -88,7 +95,7 @@
     <script src="js/moment.js" charset="utf-8"></script>
     <script src="js/common.js" charset="utf-8"></script>
     <script src="js/layui/layui.js" charset="utf-8"></script>
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="js/element.js"></script>
     <script src="js/index.js?v=2" charset="utf-8"></script>
 </body>
 

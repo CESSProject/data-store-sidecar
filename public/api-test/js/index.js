@@ -119,10 +119,11 @@ const vm = new Vue({
 			console.log(currAPI.name,result.url)
 			if (currAPI.name == 'download' && result.url) {
 				that.fileDownloadUrl = result.url;
+				console.log('here...');
 				clearTimeout(timeout);
 				timeout=setTimeout(() => {
 					that.fileDownloadUrl = '';
-				}, 10000);
+				}, 20000);
 			}
 			return result;
 		},

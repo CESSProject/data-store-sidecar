@@ -132,6 +132,34 @@ const requestAPI=[
                 must:true
             },
         ],
+    },
+    {
+        method: 'get',
+        name: 'addressToEvm',
+        fun: 'commonGet',
+        url: '/store/converter/addressToEvm',
+        avgs: [
+            {
+                key: 'walletAddress',
+                type: 'string',
+                value: '',
+                must:true
+            }
+        ],
+    },
+    {
+        method: 'get',
+        name: 'evmToAddress',
+        fun: 'commonGet',
+        url: '/store/converter/evmToAddress',
+        avgs: [
+            {
+                key: 'evm',
+                type: 'string',
+                value: '',
+                must:true
+            }
+        ],
     }
 ]
 

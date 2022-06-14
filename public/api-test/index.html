@@ -78,14 +78,16 @@
                                 type="file" /></div>
                     </div>
                 </div>
-            </div>
+            </div>            
             <el-button v-if="offlineSign.currAPIName" :loading="offlineSign.loading" :disabled="offlineSign.loading"
-                style="margin-top:10px;" type="success" @click="onClick('offline')">Offline Sign</el-button>
+                style="margin-top:10px;" type="success" @click="onClick('offline')">Offline Sign</el-button>            
             <div v-if="offlineSign.result" class="result">
                 <h2>response result</h2>
                 <el-input type="textarea" :rows="5" autosize placeholder="result" v-model="offlineSign.result">
                 </el-input>
             </div>
+            <el-button v-if="offlineSign.currAPIName&&offlineSign.resultJson" :loading="offlineSign.loading" :disabled="offlineSign.loading"
+                style="margin-top:10px;" type="default" @click="copyData">← Copy result to left</el-button>
         </el-card>
     </div>
 

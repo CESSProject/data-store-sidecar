@@ -28,6 +28,8 @@ export default class AllController extends AbstractController<Store> {
 		arr.push(['find/purchasedSpace', this.getAll]);
 		arr.push(['find/file', this.getAll]);
 		arr.push(['find/fileList', this.getAll]);
+		arr.push(['converter/addressToEvm', this.getAll]);
+		arr.push(['converter/evmToAddress', this.getAll]);
 		this.safeMountAsyncGetHandlers(arr);
 
 		const arrPost: any = [];
@@ -51,6 +53,8 @@ export default class AllController extends AbstractController<Store> {
 		arrPost.push(['datastore/retrieve', this.postAll]);
 		arrPost.push(['datastore/replace', this.postAll]);
 		arrPost.push(['datastore/delete', this.postAll]);
+
+		
 
 		this.safeMountAsyncPostHandlers(arrPost);
 	}

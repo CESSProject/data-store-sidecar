@@ -7,7 +7,7 @@ import _ from 'lodash';
 import fs from 'fs';
 import makeDir from 'make-dir';
 import path from 'path';
-import { FileStorage } from 'cess-js-sdk';
+import { FileStorage, Converter } from 'cess-js-sdk';
 import { SidecarConfig } from '../../SidecarConfig';
 import { ParamsDictionary } from 'express-serve-static-core';
 
@@ -18,7 +18,7 @@ export class Store extends AbstractService {
 	storeApi: any;
 	constructor(api: ApiPromise) {
 		const storeApi = new FileStorage({
-			nodeURL:SidecarConfig.config.SUBSTRATE.WS_URL,//'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
+			nodeURL: SidecarConfig.config.SUBSTRATE.WS_URL, //'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
 			keyringOption: { type: 'sr25519', ss58Format: 42 },
 		});
 		super(api);
@@ -42,8 +42,8 @@ export class Store extends AbstractService {
 	async purchasedSpace(params: ParamsDictionary): Promise<any> {
 		try {
 			console.log(params);
-			if(!params.walletAddress){
-				throw 'walletAddress is required.'
+			if (!params.walletAddress) {
+				throw 'walletAddress is required.';
 			}
 			const retsult = await this.storeApi.findPurchasedSpace(
 				params.walletAddress
@@ -63,8 +63,8 @@ export class Store extends AbstractService {
 	async file(params: ParamsDictionary): Promise<any> {
 		try {
 			console.log(params);
-			if(!params.fileId){
-				throw 'fileId is required.'
+			if (!params.fileId) {
+				throw 'fileId is required.';
 			}
 			const retsult = await this.storeApi.findFile(params.fileId);
 			return {
@@ -82,8 +82,8 @@ export class Store extends AbstractService {
 	async fileList(params: ParamsDictionary): Promise<any> {
 		try {
 			console.log(params);
-			if(!params.walletAddress){
-				throw 'walletAddress is required.'
+			if (!params.walletAddress) {
+				throw 'walletAddress is required.';
 			}
 			const retsult = await this.storeApi.findFileList(params.walletAddress);
 			return {
@@ -100,8 +100,8 @@ export class Store extends AbstractService {
 	}
 	async del(params: ParamsDictionary): Promise<any> {
 		try {
-			if(!params.txHash){
-				throw 'txHash is required.'
+			if (!params.txHash) {
+				throw 'txHash is required.';
 			}
 			const retsult = await this.storeApi.fileDeleteWithTxHash(params.txHash);
 			return {
@@ -118,8 +118,8 @@ export class Store extends AbstractService {
 	}
 	async expansion(params: ParamsDictionary): Promise<any> {
 		try {
-			if(!params.txHash){
-				throw 'txHash is required.'
+			if (!params.txHash) {
+				throw 'txHash is required.';
 			}
 			const retsult = await this.storeApi.expansionWithTxHash(params.txHash);
 			return {
@@ -244,12 +244,16 @@ export class Store extends AbstractService {
 	}
 	async publickey(params: ParamsDictionary): Promise<any> {
 		try {
-			if(!params.addr){
-				throw 'addr is required.'
+			if (!params.addr) {
+				throw 'addr is required.';
 			}
 			const pair = this.storeApi.keyring.addFromAddress(params.addr);
-			const retsult= "0x" +Array.from(pair.publicKey, (i:any) => i.toString(16).padStart(2, "0")).join("");
-			return {retsult};
+			const retsult =
+				'0x' +
+				Array.from(pair.publicKey, (i: any) =>
+					i.toString(16).padStart(2, '0')
+				).join('');
+			return { retsult };
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
 			throw {
@@ -392,7 +396,7 @@ export class Store extends AbstractService {
 				stack,
 			};
 		}
-	} 
+	}
 	async replace(params: ParamsDictionary): Promise<any> {
 		try {
 			let filePath = fileDir + params.fileid;
@@ -419,10 +423,46 @@ export class Store extends AbstractService {
 	}
 	async delete(params: ParamsDictionary): Promise<any> {
 		try {
-			if(!params.txHash){
-				throw 'txHash is required.'
+			if (!params.txHash) {
+				throw 'txHash is required.';
 			}
 			const retsult = await this.storeApi.fileDeleteWithTxHash(params.txHash);
+			return {
+				retsult,
+			};
+		} catch (err) {
+			const { cause, stack } = extractCauseAndStack(err);
+			throw {
+				error: 'Unable to fetch findFile',
+				cause,
+				stack,
+			};
+		}
+	}
+	addressToEvm(params: ParamsDictionary): any {
+		try {
+			if (!params.walletAddress) {
+				throw 'walletAddress is required.';
+			}
+			const retsult = Converter.addressToEvm(params.walletAddress);
+			return {
+				retsult,
+			};
+		} catch (err) {
+			const { cause, stack } = extractCauseAndStack(err);
+			throw {
+				error: 'Unable to fetch findFile',
+				cause,
+				stack,
+			};
+		}
+	}
+	evmToAddress(params: ParamsDictionary): any {
+		try {
+			if (!params.evm) {
+				throw 'evm is required.';
+			}
+			const retsult = Converter.evmToAddress(params.evm);
 			return {
 				retsult,
 			};

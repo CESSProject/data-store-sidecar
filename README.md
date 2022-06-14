@@ -13,13 +13,13 @@
 
 ## Source code installation and usage
 
-### Clone the code.
+### Clone the code
 
 ```bash
 git clone https://github.com/CESSProject/data-store-sidecar.git
 ```
 
-### Ininstall package
+### Install packages
 
 
 ```bash

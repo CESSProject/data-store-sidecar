@@ -1,7 +1,7 @@
 import { ApiPromise } from '@polkadot/api';
 import { RequestHandler } from 'express';
 
-import { Store } from '../../services';
+import { Store} from '../../services';
 import AbstractController from '../AbstractController';
 
 /**
@@ -33,14 +33,24 @@ export default class AllController extends AbstractController<Store> {
 		const arrPost: any = [];
 		arrPost.push(['file/upload', this.postAll]);
 		arrPost.push(['file/download', this.postAll]);
-		arrPost.push(['file/delete', this.postAll]);
+		arrPost.push(['file/del', this.postAll]);
 		arrPost.push(['space/expansion', this.postAll]);
 
 		arrPost.push(['tx/getUploadTxHash', this.postAll]);
-		arrPost.push(['tx/getDeleteTxHash', this.postAll]);
+		arrPost.push(['tx/getDelTxHash', this.postAll]);
 		arrPost.push(['tx/getExpansionTxHash', this.postAll]);
 
 		arrPost.push(['faucet/publickey', this.postAll]);
+
+		arrPost.push(['datastore/getStoreTxHash', this.postAll]);
+		arrPost.push(['datastore/getRetrieveTxHash', this.postAll]);
+		arrPost.push(['datastore/getReplaceTxHash', this.postAll]);
+		arrPost.push(['datastore/getDeleteTxHash', this.postAll]);
+
+		arrPost.push(['datastore/store', this.postAll]);
+		arrPost.push(['datastore/retrieve', this.postAll]);
+		arrPost.push(['datastore/replace', this.postAll]);
+		arrPost.push(['datastore/delete', this.postAll]);
 
 		this.safeMountAsyncPostHandlers(arrPost);
 	}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>API test tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="js/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="js/font-awesome-4.7.0/css/font-awesome.min.css" media="all" />
+    <link rel="stylesheet" href="css/element.css">
+    <link rel="stylesheet" href="css/index.css" media="all" />
+</head>
+
+<body>
+    <div id="app">
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>API Request</span>
+            </div>
+            <div id="content">
+                <h2>apis</h2>
+                <el-radio-group v-model="currAPIName" @change="onChangeAPI">
+                    <el-radio v-for="item in apis" :key="item.name" :label="item.name" :value="item.name"></el-radio>
+                </el-radio-group>
+                <!-- <el-select v-model="currAPIName" placeholder="Please select" @change="onChangeAPI">
+                    <el-option v-for="item in apis" :key="item.name" :label="item.name" :value="item.name">
+                    </el-option>
+                </el-select> -->
+            </div>
+            <div v-if="currAPI&&currAPI.avgs&&currAPI.avgs.length>0">
+                <h2>params</h2>
+                <div>
+                    <div v-for="item in currAPI.avgs">
+                        {{item.key}}：<font v-if="item.must" color="red">*</font>
+                        <el-input v-if="item.type=='string'" v-model="item.value"></el-input>
+                        <el-input v-else-if="item.type=='number'" type="number" v-model="item.value"></el-input>
+                        <el-input v-else-if="item.type=='file'" type="file" v-model="item.value"></el-input>
+                    </div>
+                </div>
+            </div>
+            <el-button v-if="currAPIName" :loading="loading" :disabled="loading" style="margin-top:10px;" type="primary"
+                @click="onClick">GO Start</el-button>
+            <div v-if="result" class="result">
+                <h2>response result</h2>
+                <el-input type="textarea" :rows="5" autosize placeholder="result" v-model="result" />
+                <a target="_blank" :href="fileDownloadUrl">
+                    <el-alert title="The file is ready. Click here to save" type="success" effect="dark" show-icon>
+                    </el-alert>
+                </a>
+            </div>
+            <div v-if="fileDownloadUrl" class="result">
+                <h2>download link</h2>
+                <a target="_blank" :href="fileDownloadUrl">
+                    <el-alert title="The file is ready. Click here to save" type="success" effect="dark" show-icon>
+                    </el-alert>
+                </a>
+            </div>
+        </el-card>
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span>Offline Sign</span>
+            </div>
+            <div id="content">
+                <h2>apis</h2>
+                <el-radio-group v-model="offlineSign.currAPIName" @change="onChangeAPI('offline')">
+                    <el-radio-button v-for="item in offlineSign.apis" :key="item.name" :label="item.name"
+                        :value="item.name"></el-radio-button>
+                </el-radio-group>
+            </div>
+            <div v-if="offlineSign.currAPI&&offlineSign.currAPI.avgs&&offlineSign.currAPI.avgs.length>0">
+                <h2>params</h2>
+                <div>
+                    <div v-for="item in offlineSign.currAPI.avgs">
+                        {{item.key}}：<font v-if="item.must" color="red">*</font>
+                        <el-input v-if="item.type=='string'" v-model="item.value"></el-input>
+                        <el-input v-else-if="item.type=='number'" type="number" v-model="item.value"></el-input>
+                        <div v-else-if="item.type=='file'" class="file-box"><input @change="getFile($event,item)"
+                                type="file" /></div>
+                    </div>
+                </div>
+            </div>
+            <el-button v-if="offlineSign.currAPIName" :loading="offlineSign.loading" :disabled="offlineSign.loading"
+                style="margin-top:10px;" type="success" @click="onClick('offline')">Offline Sign</el-button>
+            <div v-if="offlineSign.result" class="result">
+                <h2>response result</h2>
+                <el-input type="textarea" :rows="5" autosize placeholder="result" v-model="offlineSign.result">
+                </el-input>
+            </div>
+        </el-card>
+    </div>
+
+    <script src="js/api-config.js" charset="utf-8"></script>
+    <script src="js/jquery-1.4.3.js" charset="utf-8"></script>
+    <script src="js/vue.min-2.4.js" charset="utf-8"></script>
+    <script src="js/moment.js" charset="utf-8"></script>
+    <script src="js/common.js" charset="utf-8"></script>
+    <script src="js/layui/layui.js" charset="utf-8"></script>
+    <script src="js/element.js"></script>
+    <script src="js/index.js?v=2" charset="utf-8"></script>
+</body>
+
+</html>

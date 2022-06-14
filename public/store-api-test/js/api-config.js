@@ -1,55 +1,7 @@
 const requestAPI=[
     {
-        method: 'get',
-        name: 'findPrice',
-        fun: 'commonGet',
-        url: '/store/find/price',
-    },
-    {
-        method: 'get',
-        name: 'findPurchasedSpace',
-        fun: 'commonGet',
-        url: '/store/find/purchasedSpace',
-        avgs: [
-            {
-                key: 'walletAddress',
-                type: 'string',
-                value: '',
-                must:true
-            },
-        ],
-    },
-    {
-        method: 'get',
-        name: 'findfile',
-        fun: 'commonGet',
-        url: '/store/find/file/',
-        avgs: [
-            {
-                key: 'fileId',
-                type: 'string',
-                value: '',
-                must:true
-            },
-        ],
-    },
-    {
-        method: 'get',
-        name: 'fileList',
-        fun: 'commonGet',
-        url: '/store/find/fileList/',
-        avgs: [
-            {
-                key: 'walletAddress',
-                type: 'string',
-                value: '',
-                must:true
-            },
-        ],
-    },
-    {
         method: 'post',
-        name: 'upload',
+        name: 'store',
         fun: 'commonGet',
         url: '/store/file/upload',
         avgs: [
@@ -95,7 +47,7 @@ const requestAPI=[
         method: 'post',
         name: 'delete',
         fun: 'commonGet',
-        url: '/store/file/del',
+        url: '/store/file/delete',
         avgs: [
             {
                 key: 'txHash',
@@ -177,7 +129,7 @@ const offlineSingAPI=[
         method: 'post',
         name: 'delete',
         fun: 'commonGet',
-        url: '/store/tx/getDelTxHash',
+        url: '/store/tx/getDeleteTxHash',
         avgs: [
             {
                 key: 'mnemonic',

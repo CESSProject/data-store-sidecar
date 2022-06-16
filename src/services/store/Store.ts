@@ -26,9 +26,9 @@ export class Store extends AbstractService {
 	}
 	async price(): Promise<any> {
 		try {
-			const retsult = await this.storeApi.findPrice();
+			const result = await this.storeApi.findPrice();
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -41,15 +41,14 @@ export class Store extends AbstractService {
 	}
 	async purchasedSpace(params: ParamsDictionary): Promise<any> {
 		try {
-			console.log(params);
 			if (!params.walletAddress) {
 				throw 'walletAddress is required.';
 			}
-			const retsult = await this.storeApi.findPurchasedSpace(
+			const result = await this.storeApi.findPurchasedSpace(
 				params.walletAddress
 			);
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -62,13 +61,12 @@ export class Store extends AbstractService {
 	}
 	async file(params: ParamsDictionary): Promise<any> {
 		try {
-			console.log(params);
 			if (!params.fileId) {
 				throw 'fileId is required.';
 			}
-			const retsult = await this.storeApi.findFile(params.fileId);
+			const result = await this.storeApi.findFile(params.fileId);
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -81,13 +79,13 @@ export class Store extends AbstractService {
 	}
 	async fileList(params: ParamsDictionary): Promise<any> {
 		try {
-			console.log(params);
+			
 			if (!params.walletAddress) {
 				throw 'walletAddress is required.';
 			}
-			const retsult = await this.storeApi.findFileList(params.walletAddress);
+			const result = await this.storeApi.findFileList(params.walletAddress);
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -103,9 +101,9 @@ export class Store extends AbstractService {
 			if (!params.txHash) {
 				throw 'txHash is required.';
 			}
-			const retsult = await this.storeApi.fileDeleteWithTxHash(params.txHash);
+			const result = await this.storeApi.fileDeleteWithTxHash(params.txHash);
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -121,9 +119,9 @@ export class Store extends AbstractService {
 			if (!params.txHash) {
 				throw 'txHash is required.';
 			}
-			const retsult = await this.storeApi.expansionWithTxHash(params.txHash);
+			const result = await this.storeApi.expansionWithTxHash(params.txHash);
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -136,18 +134,27 @@ export class Store extends AbstractService {
 	}
 	async upload(params: ParamsDictionary): Promise<any> {
 		try {
+			if (!params) {
+				throw 'params is required.';
+			}
+			if (!params.txHash) {
+				throw 'txHash is required.';
+			}
+			if (!params.fileid) {
+				throw 'fileid is required.';
+			}
 			let filePath = fileDir + params.fileid;
 			if (!fs.existsSync(filePath)) {
 				throw 'file not found';
 			}
-			const retsult = await this.storeApi.fileUploadWithTxHash(
+			const result = await this.storeApi.fileUploadWithTxHash(
 				params.txHash,
 				filePath,
 				params.fileid,
 				params.privatekey
 			);
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -182,12 +189,12 @@ export class Store extends AbstractService {
 	}
 	async getDelTxHash(params: ParamsDictionary): Promise<any> {
 		try {
-			const retsult = await this.storeApi.getFileDeleteTxHash(
+			const result = await this.storeApi.getFileDeleteTxHash(
 				params.mnemonic,
 				params.fileId
 			);
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -200,14 +207,14 @@ export class Store extends AbstractService {
 	}
 	async getExpansionTxHash(params: ParamsDictionary): Promise<any> {
 		try {
-			const retsult = await this.storeApi.getExpansionTxHash(
+			const result = await this.storeApi.getExpansionTxHash(
 				params.mnemonic,
 				params.spaceCount,
 				params.leaseCount,
 				params.maxPrice
 			);
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -221,22 +228,24 @@ export class Store extends AbstractService {
 	async getUploadTxHash(params: ParamsDictionary, req: any): Promise<any> {
 		try {
 			let newFilePath = path.dirname(req.files.file.path);
-			newFilePath = path.join(newFilePath, '/') + req.files.file.name;
-			fs.renameSync(req.files.file.path, newFilePath);
-			let retsult = await this.storeApi.getFileUploadTxHash(
+			newFilePath = path.join(newFilePath, './') + req.files.file.name;
+			if (req.files.file.path != newFilePath) {
+				fs.renameSync(req.files.file.path, newFilePath);
+			}
+			let result = await this.storeApi.getFileUploadTxHash(
 				params.mnemonic,
 				newFilePath,
-				params.backups,
-				params.downloadfee,
+				parseInt(params.backups),
+				parseInt(params.downloadfee),
 				params.privatekey
 			);
-			fs.renameSync(newFilePath, fileDir + retsult.fileid);
-			delete retsult.filePath;
-			return retsult;
+			fs.renameSync(newFilePath, fileDir + result.fileid);
+			delete result.filePath;
+			return { result };
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
 			throw {
-				error: 'Unable to fetch upload',
+				error: 'Unable to fetch getUploadTxHash',
 				cause,
 				stack,
 			};
@@ -248,12 +257,12 @@ export class Store extends AbstractService {
 				throw 'addr is required.';
 			}
 			const pair = this.storeApi.keyring.addFromAddress(params.addr);
-			const retsult =
+			const result =
 				'0x' +
 				Array.from(pair.publicKey, (i: any) =>
 					i.toString(16).padStart(2, '0')
 				).join('');
-			return { retsult };
+			return { result };
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
 			throw {
@@ -265,188 +274,189 @@ export class Store extends AbstractService {
 	}
 
 	// 0.3
-	async getStoreTxHash(params: ParamsDictionary, req: any): Promise<any> {
-		try {
-			let newFilePath = path.dirname(req.files.file.path);
-			newFilePath = path.join(newFilePath, '/') + req.files.file.name;
-			fs.renameSync(req.files.file.path, newFilePath);
-			let retsult = await this.storeApi.getFileUploadTxHash(
-				params.mnemonic,
-				newFilePath,
-				params.backups,
-				params.downloadfee,
-				params.privatekey
-			);
-			fs.renameSync(newFilePath, fileDir + retsult.fileid);
-			delete retsult.filePath;
-			return retsult;
-		} catch (err) {
-			const { cause, stack } = extractCauseAndStack(err);
-			throw {
-				error: 'Unable to fetch upload',
-				cause,
-				stack,
-			};
-		}
-	}
-	async getRetrieveTxHash(params: ParamsDictionary): Promise<any> {
-		try {
-			const retsult = await this.storeApi.getFileDeleteTxHash(
-				params.mnemonic,
-				params.fileId
-			);
-			return {
-				retsult,
-			};
-		} catch (err) {
-			const { cause, stack } = extractCauseAndStack(err);
-			throw {
-				error: 'Unable to fetch findFile',
-				cause,
-				stack,
-			};
-		}
-	}
-	async getReplaceTxHash(params: ParamsDictionary): Promise<any> {
-		try {
-			const retsult = await this.storeApi.getExpansionTxHash(
-				params.mnemonic,
-				params.spaceCount,
-				params.leaseCount,
-				params.maxPrice
-			);
-			return {
-				retsult,
-			};
-		} catch (err) {
-			const { cause, stack } = extractCauseAndStack(err);
-			throw {
-				error: 'Unable to fetch findFile',
-				cause,
-				stack,
-			};
-		}
-	}
-	async getDeleteTxHash(params: ParamsDictionary, req: any): Promise<any> {
-		try {
-			let newFilePath = path.dirname(req.files.file.path);
-			newFilePath = path.join(newFilePath, '/') + req.files.file.name;
-			fs.renameSync(req.files.file.path, newFilePath);
-			let retsult = await this.storeApi.getFileUploadTxHash(
-				params.mnemonic,
-				newFilePath,
-				params.backups,
-				params.downloadfee,
-				params.privatekey
-			);
-			fs.renameSync(newFilePath, fileDir + retsult.fileid);
-			delete retsult.filePath;
-			return retsult;
-		} catch (err) {
-			const { cause, stack } = extractCauseAndStack(err);
-			throw {
-				error: 'Unable to fetch upload',
-				cause,
-				stack,
-			};
-		}
-	}
-	async store(params: ParamsDictionary): Promise<any> {
-		try {
-			let filePath = fileDir + params.fileid;
-			if (!fs.existsSync(filePath)) {
-				throw 'file not found';
-			}
-			const retsult = await this.storeApi.fileUploadWithTxHash(
-				params.txHash,
-				filePath,
-				params.fileid,
-				params.privatekey
-			);
-			return {
-				retsult,
-			};
-		} catch (err) {
-			const { cause, stack } = extractCauseAndStack(err);
-			throw {
-				error: 'Unable to fetch upload',
-				cause,
-				stack,
-			};
-		}
-	}
-	async retrieve(params: ParamsDictionary): Promise<any> {
-		try {
-			const fileId = params.fileId;
-			const fileDownPath = await this.storeApi.fileDownload(
-				fileId,
-				fileDir,
-				params.privatekey
-			);
-			const url = '/upload-file/' + path.basename(fileDownPath);
-			return {
-				path: fileDownPath,
-				url,
-			};
-		} catch (err) {
-			const { cause, stack } = extractCauseAndStack(err);
-			throw {
-				error: 'Unable to fetch download',
-				cause,
-				stack,
-			};
-		}
-	}
-	async replace(params: ParamsDictionary): Promise<any> {
-		try {
-			let filePath = fileDir + params.fileid;
-			if (!fs.existsSync(filePath)) {
-				throw 'file not found';
-			}
-			const retsult = await this.storeApi.fileUploadWithTxHash(
-				params.txHash,
-				filePath,
-				params.fileid,
-				params.privatekey
-			);
-			return {
-				retsult,
-			};
-		} catch (err) {
-			const { cause, stack } = extractCauseAndStack(err);
-			throw {
-				error: 'Unable to fetch upload',
-				cause,
-				stack,
-			};
-		}
-	}
-	async delete(params: ParamsDictionary): Promise<any> {
-		try {
-			if (!params.txHash) {
-				throw 'txHash is required.';
-			}
-			const retsult = await this.storeApi.fileDeleteWithTxHash(params.txHash);
-			return {
-				retsult,
-			};
-		} catch (err) {
-			const { cause, stack } = extractCauseAndStack(err);
-			throw {
-				error: 'Unable to fetch findFile',
-				cause,
-				stack,
-			};
-		}
-	}
+	// async getStoreTxHash(params: ParamsDictionary, req: any): Promise<any> {
+	// 	try {
+	// 		let newFilePath = path.dirname(req.files.file.path);
+	// 		newFilePath = path.join(newFilePath, '/') + req.files.file.name;
+	// 		fs.renameSync(req.files.file.path, newFilePath);
+	// 		let result = await this.storeApi.getFileUploadTxHash(
+	// 			params.mnemonic,
+	// 			newFilePath,
+	// 			params.backups,
+	// 			params.downloadfee,
+	// 			params.privatekey
+	// 		);
+	// 		fs.renameSync(newFilePath, fileDir + result.fileid);
+	// 		delete result.filePath;
+	// 		return result;
+	// 	} catch (err) {
+	// 		const { cause, stack } = extractCauseAndStack(err);
+	// 		throw {
+	// 			error: 'Unable to fetch upload',
+	// 			cause,
+	// 			stack,
+	// 		};
+	// 	}
+	// }
+	// async getRetrieveTxHash(params: ParamsDictionary): Promise<any> {
+	// 	try {
+	// 		const result = await this.storeApi.getFileDeleteTxHash(
+	// 			params.mnemonic,
+	// 			params.fileId
+	// 		);
+	// 		return {
+	// 			result,
+	// 		};
+	// 	} catch (err) {
+	// 		const { cause, stack } = extractCauseAndStack(err);
+	// 		throw {
+	// 			error: 'Unable to fetch findFile',
+	// 			cause,
+	// 			stack,
+	// 		};
+	// 	}
+	// }
+	// async getReplaceTxHash(params: ParamsDictionary): Promise<any> {
+	// 	try {
+	// 		const result = await this.storeApi.getExpansionTxHash(
+	// 			params.mnemonic,
+	// 			params.spaceCount,
+	// 			params.leaseCount,
+	// 			params.maxPrice
+	// 		);
+	// 		return {
+	// 			result,
+	// 		};
+	// 	} catch (err) {
+	// 		const { cause, stack } = extractCauseAndStack(err);
+	// 		throw {
+	// 			error: 'Unable to fetch findFile',
+	// 			cause,
+	// 			stack,
+	// 		};
+	// 	}
+	// }
+	// async getDeleteTxHash(params: ParamsDictionary, req: any): Promise<any> {
+	// 	try {
+	// 		let newFilePath = path.dirname(req.files.file.path);
+	// 		newFilePath = path.join(newFilePath, '/') + req.files.file.name;
+	// 		fs.renameSync(req.files.file.path, newFilePath);
+	// 		let result = await this.storeApi.getFileUploadTxHash(
+	// 			params.mnemonic,
+	// 			newFilePath,
+	// 			params.backups,
+	// 			params.downloadfee,
+	// 			params.privatekey
+	// 		);
+	// 		fs.renameSync(newFilePath, fileDir + result.fileid);
+	// 		delete result.filePath;
+	// 		return result;
+	// 	} catch (err) {
+	// 		const { cause, stack } = extractCauseAndStack(err);
+	// 		throw {
+	// 			error: 'Unable to fetch upload',
+	// 			cause,
+	// 			stack,
+	// 		};
+	// 	}
+	// }
+	// async store(params: ParamsDictionary): Promise<any> {
+	// 	try {
+	// 		let filePath = fileDir + params.fileid;
+	// 		if (!fs.existsSync(filePath)) {
+	// 			throw 'file not found';
+	// 		}
+	// 		const result = await this.storeApi.fileUploadWithTxHash(
+	// 			params.txHash,
+	// 			filePath,
+	// 			params.fileid,
+	// 			params.privatekey
+	// 		);
+	// 		return {
+	// 			result,
+	// 		};
+	// 	} catch (err) {
+	// 		const { cause, stack } = extractCauseAndStack(err);
+	// 		throw {
+	// 			error: 'Unable to fetch upload',
+	// 			cause,
+	// 			stack,
+	// 		};
+	// 	}
+	// }
+	// async retrieve(params: ParamsDictionary): Promise<any> {
+	// 	try {
+	// 		const fileId = params.fileId;
+	// 		const fileDownPath = await this.storeApi.fileDownload(
+	// 			fileId,
+	// 			fileDir,
+	// 			params.privatekey
+	// 		);
+	// 		const url = '/upload-file/' + path.basename(fileDownPath);
+	// 		return {
+	// 			path: fileDownPath,
+	// 			url,
+	// 		};
+	// 	} catch (err) {
+	// 		const { cause, stack } = extractCauseAndStack(err);
+	// 		throw {
+	// 			error: 'Unable to fetch download',
+	// 			cause,
+	// 			stack,
+	// 		};
+	// 	}
+	// }
+	// async replace(params: ParamsDictionary): Promise<any> {
+	// 	try {
+	// 		let filePath = fileDir + params.fileid;
+	// 		if (!fs.existsSync(filePath)) {
+	// 			throw 'file not found';
+	// 		}
+	// 		const result = await this.storeApi.fileUploadWithTxHash(
+	// 			params.txHash,
+	// 			filePath,
+	// 			params.fileid,
+	// 			params.privatekey
+	// 		);
+	// 		return {
+	// 			result,
+	// 		};
+	// 	} catch (err) {
+	// 		const { cause, stack } = extractCauseAndStack(err);
+	// 		throw {
+	// 			error: 'Unable to fetch upload',
+	// 			cause,
+	// 			stack,
+	// 		};
+	// 	}
+	// }
+	// async delete(params: ParamsDictionary): Promise<any> {
+	// 	try {
+	// 		if (!params.txHash) {
+	// 			throw 'txHash is required.';
+	// 		}
+	// 		const result = await this.storeApi.fileDeleteWithTxHash(params.txHash);
+	// 		return {
+	// 			result,
+	// 		};
+	// 	} catch (err) {
+	// 		const { cause, stack } = extractCauseAndStack(err);
+	// 		throw {
+	// 			error: 'Unable to fetch findFile',
+	// 			cause,
+	// 			stack,
+	// 		};
+	// 	}
+	// }
+
 	addressToEvm(params: ParamsDictionary): any {
 		try {
 			if (!params.walletAddress) {
 				throw 'walletAddress is required.';
 			}
-			const retsult = Converter.addressToEvm(params.walletAddress);
+			const result = Converter.addressToEvm(params.walletAddress);
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -462,9 +472,9 @@ export class Store extends AbstractService {
 			if (!params.evm) {
 				throw 'evm is required.';
 			}
-			const retsult = Converter.evmToAddress(params.evm);
+			const result = Converter.evmToAddress(params.evm);
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);

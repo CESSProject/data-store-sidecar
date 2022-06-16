@@ -9,21 +9,21 @@ export class All extends AbstractService {
 		const { api } = this;
 		try {
 			await api.isReady;
-			let retsult;
+			let result;
 			
 			let fun = api.query.fileBank[eventStr];
 			if (param.id) {
-				retsult = await fun(param.id);
-				retsult = retsult.toJSON();
+				result = await fun(param.id);
+				result = result.toJSON();
 			} else if (fun.entries && typeof fun.entries == 'function') {
 				if (param && param.id) {
 					// console.log('run here 1');
-					retsult = await fun(param.id);
-					retsult = retsult.toJSON();
+					result = await fun(param.id);
+					result = result.toJSON();
 				} else {
 					// console.log('run here 2');
-					retsult = await fun.entries();
-					retsult = retsult.map(([key, entry]) => {
+					result = await fun.entries();
+					result = result.map(([key, entry]) => {
 						let id = _.get(
 							key.args.map((k) => k.toHuman()),
 							`0`
@@ -35,16 +35,16 @@ export class All extends AbstractService {
 			} else {
 				if (param && param.id) {
 					// console.log('run here 3');
-					retsult = await fun(param.id);
+					result = await fun(param.id);
 				} else {
 					// console.log('run here 4');
-					retsult = await fun();
+					result = await fun();
 				}
-				retsult = retsult.toJSON();
+				result = result.toJSON();
 			}
 			// console.log('run here 5');
 			return {
-				retsult,
+				result,
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);

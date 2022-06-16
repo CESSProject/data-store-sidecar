@@ -1,4 +1,4 @@
-let timeout=null;
+let timeout = null;
 const vm = new Vue({
 	el: '#app',
 	data: {
@@ -6,6 +6,7 @@ const vm = new Vue({
 		currAPI: '',
 		apis: requestAPI,
 		result: '',
+		resultJson: null,
 		loading: false,
 		fileDownloadUrl: '',
 		offlineSign: {
@@ -14,6 +15,7 @@ const vm = new Vue({
 			currAPI: '',
 			apis: offlineSingAPI,
 			result: '',
+			resultJson: null,
 			loading: false,
 		},
 	},
@@ -36,7 +38,7 @@ const vm = new Vue({
 					type: 'error',
 				});
 			}
-			that.result='request sending...';
+			that.result = 'request sending...';
 			that.loading = true;
 			this[that.currAPI.fun](type).then(
 				(t) => {
@@ -46,6 +48,16 @@ const vm = new Vue({
 					that.result = JSON.stringify(e);
 				}
 			);
+		},
+		copyData() {
+			let sour = this.offlineSign;
+			this.currAPIName = sour.currAPIName;
+			this.onChangeAPI();
+			console.log(sour.resultJson);
+			this.currAPI.avgs.forEach(t=>{
+				let v=sour.resultJson[t.key]||sour.resultJson.retsult;
+				t.value=v;
+			});
 		},
 		onChangeAPI(type) {
 			let that = this;
@@ -83,7 +95,8 @@ const vm = new Vue({
 			const currAPI = that.currAPI;
 			let url = currAPI.url;
 			const fd = new FormData();
-			that.result='requsting...';
+			that.result = 'requsting...';
+			that.resultJson=null;
 			if (currAPI.avgs) {
 				const arr = [];
 				let err = [];
@@ -99,7 +112,7 @@ const vm = new Vue({
 					}
 				});
 				if (err.length > 0) {
-					that.result=err.join(';');
+					that.result = err.join(';');
 					return This.$message({
 						showClose: true,
 						message: err.join(';'),
@@ -115,13 +128,16 @@ const vm = new Vue({
 			if (typeof result != 'object') {
 				result = { result };
 			}
+			that.resultJson = result;
 			that.result = JSON.stringify(result, null, 5);
+			console.log(currAPI.name, result.url);
 			if (currAPI.name == 'download' && result.url) {
 				that.fileDownloadUrl = result.url;
+				console.log('here...');
 				clearTimeout(timeout);
-				timeout=setTimeout(() => {
+				timeout = setTimeout(() => {
 					that.fileDownloadUrl = '';
-				}, 10000);
+				}, 20000);
 			}
 			return result;
 		},

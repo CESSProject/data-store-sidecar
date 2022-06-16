@@ -20,6 +20,9 @@ yarn-error.log
 /public/upload-file
 /public/docs
 
+/package-lock.json
+/yarn.lock
+
 # Tests
 /coverage
 /.nyc_output

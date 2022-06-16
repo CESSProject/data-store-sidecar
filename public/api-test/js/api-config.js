@@ -95,7 +95,7 @@ const requestAPI=[
         method: 'post',
         name: 'delete',
         fun: 'commonGet',
-        url: '/store/file/delete',
+        url: '/store/file/del',
         avgs: [
             {
                 key: 'txHash',
@@ -131,6 +131,34 @@ const requestAPI=[
                 value: '',
                 must:true
             },
+        ],
+    },
+    {
+        method: 'get',
+        name: 'addressToEvm',
+        fun: 'commonGet',
+        url: '/store/converter/addressToEvm',
+        avgs: [
+            {
+                key: 'walletAddress',
+                type: 'string',
+                value: '',
+                must:true
+            }
+        ],
+    },
+    {
+        method: 'get',
+        name: 'evmToAddress',
+        fun: 'commonGet',
+        url: '/store/converter/evmToAddress',
+        avgs: [
+            {
+                key: 'evm',
+                type: 'string',
+                value: '',
+                must:true
+            }
         ],
     }
 ]
@@ -177,7 +205,7 @@ const offlineSingAPI=[
         method: 'post',
         name: 'delete',
         fun: 'commonGet',
-        url: '/store/tx/getDeleteTxHash',
+        url: '/store/tx/getDelTxHash',
         avgs: [
             {
                 key: 'mnemonic',

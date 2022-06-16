@@ -8,23 +8,26 @@ export class All extends AbstractService {
 	async fetchFileBank(eventStr: string, param: any): Promise<any> {
 		const { api } = this;
 		try {
-			console.log('eventStr,param', eventStr, param);
-			let retsult;
+			await api.isReady;
+			let result;
+			
 			let fun = api.query.fileBank[eventStr];
 			if (param.id) {
-				retsult = await fun(param.id);
-				retsult = retsult.toJSON();
-			}
-			else if (fun.entries && typeof fun.entries == 'function') {
+				result = await fun(param.id);
+				result = result.toJSON();
+			} else if (fun.entries && typeof fun.entries == 'function') {
 				if (param && param.id) {
 					// console.log('run here 1');
-					retsult = await fun(param.id);
-					retsult = retsult.toJSON();
+					result = await fun(param.id);
+					result = result.toJSON();
 				} else {
 					// console.log('run here 2');
-					retsult = await fun.entries();
-					retsult = retsult.map(([key, entry]) => {
-						let id = _.get(key.args.map((k) => k.toHuman()), `0`);
+					result = await fun.entries();
+					result = result.map(([key, entry]) => {
+						let id = _.get(
+							key.args.map((k) => k.toHuman()),
+							`0`
+						);
 						let humanObj = entry.toJSON();
 						return _.assign(humanObj, { key: id });
 					});
@@ -32,18 +35,17 @@ export class All extends AbstractService {
 			} else {
 				if (param && param.id) {
 					// console.log('run here 3');
-					retsult = await fun(param.id);
+					result = await fun(param.id);
 				} else {
 					// console.log('run here 4');
-					retsult = await fun();
+					result = await fun();
 				}
-				retsult = retsult.toJSON();
+				result = result.toJSON();
 			}
 			// console.log('run here 5');
 			return {
-				retsult,
+				result,
 			};
-
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
 			throw {
@@ -52,7 +54,5 @@ export class All extends AbstractService {
 				stack,
 			};
 		}
-
-
 	}
 }

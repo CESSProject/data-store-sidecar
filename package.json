@@ -25,7 +25,7 @@
   "scripts": {
     "build": "substrate-exec-rimraf build/ && substrate-exec-tsc && echo Build Finished",
     "build:calc": "bash ./calc/build.sh",
-    "build:docker": "docker build -t substrate-api-sidecar .",
+    "build:docker": "docker build -t 'cess/data-store-sidecar:v1' .",
     "build:docs": "(cd docs && yarn && yarn build)",
     "main": "node ./build/src/main.js",
     "lint": "substrate-dev-run-lint --fix",
@@ -58,7 +58,7 @@
     "@polkadot/util-crypto": "^8.5.1",
     "@substrate/calc": "^0.2.8",
     "argparse": "^2.0.1",
-    "cess-js-sdk": "^1.3.8",
+    "cess-js-sdk": "^1.4.4",
     "confmgr": "1.0.7",
     "cors": "^2.8.5",
     "express": "^4.17.1",

@@ -64,5 +64,13 @@ export const config: Record<string, IChainConfig> = {
 			args: ['test:e2e-tests', '--chain', 'statemint'],
 		},
 		SasStartOpts: defaultSasStartOpts
+	},
+	cess: {
+		wsUrl: 'wss://testnet-rpc.cess.cloud/ws/',
+		JestProcOpts: {
+			...defaultJestOpts,
+			args: ['test:e2e-tests', '--chain', 'cess'],
+		},
+		SasStartOpts: defaultSasStartOpts
 	}
 };

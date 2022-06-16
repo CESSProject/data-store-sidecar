@@ -1,0 +1,42 @@
+body{
+    margin:20px;
+}
+.result{ 
+    display: block;
+    overflow: hidden;
+    background-color: #fff;
+    border-top:2px;
+    padding:20px 0;
+}
+.el-textarea__inner{
+    background-color:#000;
+    color:#fff;
+}
+.el-radio{
+    line-height: 2.5!important;
+}
+h2{
+    line-height: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 20px;
+}
+#json,#json2{
+    background-color: #000;
+    color:#fff;
+    padding:20px;
+}
+.box-card{
+    width:48%;
+    float:left;
+    margin:10px;
+}
+.file-box{
+    display: block;
+    padding: 8px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    margin: 4px 0;
+    border-radius: 4px;
+}

@@ -108,7 +108,7 @@ const main = async () => {
 	/**
 	 * Start sidecar and see if it works
 	 */
-	setWsUrl('wss://kusama-rpc.polkadot.io');
+	setWsUrl('ws://106.15.44.155:9949/');
 	console.log('Initializing Sidecar');
 	const sasStartPackOpts = {
 		proc: 'sidecar',

@@ -201,6 +201,11 @@ const traceBlock = () =>
 	Promise.resolve().then(() =>
 		kusamaRegistry.createType('TraceBlockResponse', traceBlockRPC.result)
 	);
+// const palletVersion = () =>
+// 	Promise.resolve().then(() => {
+// 		return polkadotRegistry.createType('u16', 0);
+// 	});
+
 
 /**
  * Deafult Mock polkadot-js ApiPromise. Values are largely meant to be accurate for block

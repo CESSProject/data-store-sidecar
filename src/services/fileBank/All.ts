@@ -8,14 +8,14 @@ export class All extends AbstractService {
 	async fetchFileBank(eventStr: string, param: any): Promise<any> {
 		const { api } = this;
 		try {
-			console.log('eventStr,param', eventStr, param);
+			await api.isReady;
 			let retsult;
+			
 			let fun = api.query.fileBank[eventStr];
 			if (param.id) {
 				retsult = await fun(param.id);
 				retsult = retsult.toJSON();
-			}
-			else if (fun.entries && typeof fun.entries == 'function') {
+			} else if (fun.entries && typeof fun.entries == 'function') {
 				if (param && param.id) {
 					// console.log('run here 1');
 					retsult = await fun(param.id);
@@ -24,7 +24,10 @@ export class All extends AbstractService {
 					// console.log('run here 2');
 					retsult = await fun.entries();
 					retsult = retsult.map(([key, entry]) => {
-						let id = _.get(key.args.map((k) => k.toHuman()), `0`);
+						let id = _.get(
+							key.args.map((k) => k.toHuman()),
+							`0`
+						);
 						let humanObj = entry.toJSON();
 						return _.assign(humanObj, { key: id });
 					});
@@ -43,7 +46,6 @@ export class All extends AbstractService {
 			return {
 				retsult,
 			};
-
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
 			throw {
@@ -52,7 +54,5 @@ export class All extends AbstractService {
 				stack,
 			};
 		}
-
-
 	}
 }

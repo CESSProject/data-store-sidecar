@@ -1720,7 +1720,7 @@ __metadata:
     "@types/morgan": 1.9.3
     "@types/triple-beam": ^1.3.2
     argparse: ^2.0.1
-    cess-js-sdk: ^1.4.2
+    cess-js-sdk: ^1.4.4
     confmgr: 1.0.7
     cors: ^2.8.5
     express: ^4.17.1
@@ -2944,9 +2944,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cess-js-sdk@npm:^1.4.2":
-  version: 1.4.2
-  resolution: "cess-js-sdk@npm:1.4.2"
+"cess-js-sdk@npm:^1.4.4":
+  version: 1.4.4
+  resolution: "cess-js-sdk@npm:1.4.4"
   dependencies:
     "@polkadot/api": ^8.2.1
     bs58: ^5.0.0
@@ -2957,7 +2957,7 @@ __metadata:
     protobufjs: ^6.11.2
     short-uuid: ^4.2.0
     websocket-grpc: ^1.1.5
-  checksum: bfb45f133b0412cec87e2026616793f8ead56c99c5589dd0f372822844466a1c2e0347a69e9cb0a99e9d80393f3efb5cb2676ae2a8accdc12f3a673e20784b6f
+  checksum: 3b1d72af2c3ed6c5e996fcad877ad7f28d3a5e283dd0758ff106a44d9ddc6431aa40548f8f25c794c8c1f47613de79c1054aa0593dea9b0f07ad9140fce61eb6
   languageName: node
   linkType: hard
 

@@ -252,5 +252,42 @@ const offlineSingAPI=[
                 must:true
             },
         ],
-    }
+    },
+    // {
+    //     method: 'post',
+    //     name: 'store',
+    //     fun: 'commonGet',
+    //     url: '/store/datastore/getStoreTxHash',
+    //     avgs: [
+    //         {
+    //             key: 'mnemonic',
+    //             type: 'string',
+    //             value: '',
+    //             must:true
+    //         },
+    //         {
+    //             key: 'file',
+    //             type: 'file',
+    //             value: '',
+    //             must:true
+    //         },
+    //         {
+    //             key: 'backups',
+    //             type: 'number',
+    //             value: '1',
+    //             must:true
+    //         },
+    //         {
+    //             key: 'downloadfee',
+    //             type: 'number',
+    //             value: '0',
+    //             must:true
+    //         },
+    //         {
+    //             key: 'privatekey',
+    //             type: 'string',
+    //             value: ''
+    //         },
+    //     ],
+    // },
 ]

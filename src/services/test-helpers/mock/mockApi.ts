@@ -201,11 +201,17 @@ const traceBlock = () =>
 	Promise.resolve().then(() =>
 		kusamaRegistry.createType('TraceBlockResponse', traceBlockRPC.result)
 	);
-// const palletVersion = () =>
-// 	Promise.resolve().then(() => {
-// 		return polkadotRegistry.createType('u16', 0);
-// 	});
+const price = () =>
+	Promise.resolve().then(() => {
+		return polkadotRegistry.createType('result',0);
+	});
 
+const purchasedSpace = () =>
+	Promise.resolve().then(() => {
+		return polkadotRegistry.createType('result', {
+			purchasedSpace:0
+		});
+	});
 
 /**
  * Deafult Mock polkadot-js ApiPromise. Values are largely meant to be accurate for block
@@ -253,5 +259,9 @@ export const defaultMockApi = {
 			getHeader: deriveGetHeader,
 			getBlock: deriveGetBlock,
 		},
+	},
+	store: {
+		price,
+		purchasedSpace,
 	},
 } as unknown as ApiPromise;

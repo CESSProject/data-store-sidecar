@@ -86,7 +86,7 @@
                 <el-input type="textarea" :rows="5" autosize placeholder="result" v-model="offlineSign.result">
                 </el-input>
             </div>
-            <el-button v-if="offlineSign.currAPIName&&offlineSign.resultJson" :loading="offlineSign.loading" :disabled="offlineSign.loading"
+            <el-button v-if="offlineSign.currAPIName&&offlineSign.resultJson&&offlineSign.resultJson.msg=='ok'" :loading="offlineSign.loading" :disabled="offlineSign.loading"
                 style="margin-top:10px;" type="default" @click="copyData">← Copy result to left</el-button>
         </el-card>
     </div>

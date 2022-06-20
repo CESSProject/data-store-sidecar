@@ -55,7 +55,7 @@ const vm = new Vue({
 			this.onChangeAPI();
 			console.log(sour.resultJson);
 			this.currAPI.avgs.forEach(t=>{
-				let v=sour.resultJson[t.key]||sour.resultJson.retsult;
+				let v=sour.resultJson.data[t.key]||sour.resultJson.data;
 				t.value=v;
 			});
 		},

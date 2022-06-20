@@ -75,7 +75,7 @@ export class Specs {
 		this._specs.appendSpec(
 			MODULES.SUBSTRATE,
 			this._specs.getSpec(CONFIG.WS_URL, 'Websocket URL', {
-				default: 'ws://47.243.131.57:9948/', //'ws://47.243.131.57:9948/',//'wss://testnet-rpc.cess.cloud/ws/', //'ws://106.15.44.155:9948',//'wss://example-datastore.cess.cloud/ws/' ,//'ws://106.15.44.155:9948', //'ws://127.0.0.1:9944', ws://106.15.44.155:9949  ws://47.243.82.77:9947
+				default: 'wss://testnet-rpc.cess.cloud/ws/', //'ws://47.243.131.57:9948/',//'wss://testnet-rpc.cess.cloud/ws/', //'ws://106.15.44.155:9948',//'wss://example-datastore.cess.cloud/ws/' ,//'ws://106.15.44.155:9948', //'ws://127.0.0.1:9944', ws://106.15.44.155:9949  ws://47.243.82.77:9947
 				mandatory: true,
 				regexp: /^wss?:\/\/.*(:\d{4,5})?$/,
 			})

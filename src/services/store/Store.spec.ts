@@ -22,9 +22,10 @@ describe('store', () => {
 	it('purchasedSpace', async () => {
 		const res = await store.purchasedSpace({ walletAddress });
 		expect(
-			res.data &&
-				typeof res.data.purchasedSpace &&
-				typeof res.data.purchasedSpace == 'number'
+			res.data == null ||
+				(res.data &&
+					res.data.purchasedSpace &&
+					typeof res.data.purchasedSpace == 'number')
 		).toBe(true);
 	});
 	it('fileList and file ', async () => {
@@ -96,7 +97,7 @@ describe('store', () => {
 			privatekey: '123456',
 		});
 		// console.log('res.msg',res.msg);
-		const result=res.msg=='ok'||res.msg=='File not found.'
+		const result = res.msg == 'ok' || res.msg == 'File not found.';
 		expect(result).toBe(true);
 	});
 

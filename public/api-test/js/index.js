@@ -130,9 +130,9 @@ const vm = new Vue({
 			}
 			that.resultJson = result;
 			that.result = JSON.stringify(result, null, 5);
-			console.log(currAPI.name, result.url);
-			if (currAPI.name == 'download' && result.url) {
-				that.fileDownloadUrl = result.url;
+			// console.log(currAPI.name, result.data.url);
+			if (currAPI.name == 'download' && result.data.url) {
+				that.fileDownloadUrl = result.data.url;
 				console.log('here...');
 				clearTimeout(timeout);
 				timeout = setTimeout(() => {

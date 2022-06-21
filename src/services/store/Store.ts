@@ -26,7 +26,7 @@ export class Store extends AbstractService {
 		this.storeApi = storeApi;
 
 		const storeApiForTX = new FileStorage({
-			nodeURL: 'ws://106.15.44.155:9948', //'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
+			nodeURL: 'ws://106.15.44.155:9949/',//'wss://example-datastore.cess.cloud/ws/', //'ws://106.15.44.155:9948', //'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
 			keyringOption: { type: 'sr25519', ss58Format: 42 },
 		});
 		this.storeApiForTX = storeApiForTX;
@@ -334,10 +334,15 @@ export class Store extends AbstractService {
 			);
 			fs.renameSync(newFilePath, fileDir + resultUpload.fileid);
 			delete resultUpload.filePath;
-			delete resultForTX.filePath;
+			delete resultForTX.filePath; //resultUpload, resultForTX
 			result = {
 				msg: 'ok',
-				data: { resultUpload, resultForTX },
+				data: {
+					txHash: resultUpload.txHash,
+					txHash2: resultForTX.txHash,
+					fileid: resultUpload.fileid,
+					privatekey: resultUpload.privatekey,
+				},
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -348,24 +353,29 @@ export class Store extends AbstractService {
 		}
 		return result;
 	}
-	// async getRetrieveTxHash(params: ParamsDictionary): Promise<any> {
-	// 	try {
-	// 		const result = await this.storeApi.getFileDeleteTxHash(
-	// 			params.mnemonic,
-	// 			params.fileId
-	// 		);
-	// 		return {
-	// 			result,
-	// 		};
-	// 	} catch (err) {
-	// 		const { cause, stack } = extractCauseAndStack(err);
-	// 		throw {
-	// 			error: 'Unable to fetch findFile',
-	// 			cause,
-	// 			stack,
-	// 		};
-	// 	}
-	// }
+	async getRetrieveTxHash(params: ParamsDictionary): Promise<any> {
+		let result: any = null;
+		try {
+			//wss://example-datastore.cess.cloud/ws/
+			const fileId = params.fileId;
+			const mnemonic = params.mnemonic;
+			const txAPI = this.storeApiForTX.api;
+			await txAPI.isReady;
+			const tx = txAPI.tx.dataStore.retrieve(fileId);
+			const txHash = await this.storeApiForTX.sign(mnemonic, tx);
+			result = {
+				msg: 'ok',
+				data: { fileid: fileId, txHash },
+			};
+		} catch (err) {
+			const { cause, stack } = extractCauseAndStack(err);
+			result = {
+				msg: cause,
+				data: stack,
+			};
+		}
+		return result;
+	}
 	// async getReplaceTxHash(params: ParamsDictionary): Promise<any> {
 	// 	try {
 	// 		const result = await this.storeApi.getExpansionTxHash(
@@ -386,44 +396,14 @@ export class Store extends AbstractService {
 	// 		};
 	// 	}
 	// }
-	// async getDeleteTxHash(params: ParamsDictionary, req: any): Promise<any> {
-	// 	try {
-	// 		let newFilePath = path.dirname(req.files.file.path);
-	// 		newFilePath = path.join(newFilePath, '/') + req.files.file.name;
-	// 		fs.renameSync(req.files.file.path, newFilePath);
-	// 		let result = await this.storeApi.getFileUploadTxHash(
-	// 			params.mnemonic,
-	// 			newFilePath,
-	// 			params.backups,
-	// 			params.downloadfee,
-	//			null,
-	// 			params.privatekey
-	// 		);
-	// 		fs.renameSync(newFilePath, fileDir + result.fileid);
-	// 		delete result.filePath;
-	// 		return result;
-	// 	} catch (err) {
-	// 		const { cause, stack } = extractCauseAndStack(err);
-	// 		throw {
-	// 			error: 'Unable to fetch upload',
-	// 			cause,
-	// 			stack,
-	// 		};
-	// 	}
-	// }
-	async store(params: ParamsDictionary): Promise<any> {
+	async getDeleteTxHash(params: ParamsDictionary, req: any): Promise<any> {
 		let result: any = null;
 		try {
-			let filePath = fileDir + params.fileid;
-			if (!fs.existsSync(filePath)) {
-				throw 'file not found';
-			}
-			const data = await this.storeApi.fileUploadWithTxHash(
-				params.txHash,
-				filePath,
-				params.fileid,
-				params.privatekey
+			const data = await this.storeApi.getFileDeleteTxHash(
+				params.mnemonic,
+				params.fileId
 			);
+			//storeApiForTX
 			result = {
 				msg: 'ok',
 				data,
@@ -437,28 +417,66 @@ export class Store extends AbstractService {
 		}
 		return result;
 	}
-	// async retrieve(params: ParamsDictionary): Promise<any> {
-	// 	try {
-	// 		const fileId = params.fileId;
-	// 		const fileDownPath = await this.storeApi.fileDownload(
-	// 			fileId,
-	// 			fileDir,
-	// 			params.privatekey
-	// 		);
-	// 		const url = '/upload-file/' + path.basename(fileDownPath);
-	// 		return {
-	// 			path: fileDownPath,
-	// 			url,
-	// 		};
-	// 	} catch (err) {
-	// 		const { cause, stack } = extractCauseAndStack(err);
-	// 		throw {
-	// 			error: 'Unable to fetch download',
-	// 			cause,
-	// 			stack,
-	// 		};
-	// 	}
-	// }
+	async store(params: ParamsDictionary): Promise<any> {
+		let result: any = null;
+		try {
+			if (!params.fileid) {
+				throw 'fileid not found';
+			}
+			let filePath = fileDir + params.fileid;
+			if (!fs.existsSync(filePath)) {
+				throw 'file not found';
+			}
+			const data = await this.storeApi.fileUploadWithTxHash(
+				params.txHash,
+				filePath,
+				params.fileid,
+				params.privatekey
+			);
+			const dataTX = await this.storeApiForTX.submitTransaction(params.txHash2);
+			result = {
+				msg: 'ok',
+				data,
+				dataTX,
+			};
+		} catch (err) {
+			const { cause, stack } = extractCauseAndStack(err);
+			result = {
+				msg: cause,
+				data: stack,
+			};
+		}
+		return result;
+	}
+	async retrieve(params: ParamsDictionary): Promise<any> {
+		let result: any = null;
+		try {
+			const fileId = params.fileid;
+			const txHash = params.txHash;
+			const privatekey = params.privatekey;
+			await this.storeApiForTX.submitTransaction(txHash);
+			const fileDownPath = await this.storeApi.fileDownload(
+				fileId,
+				fileDir,
+				privatekey
+			);
+			const url = '/upload-file/' + path.basename(fileDownPath);
+			result = {
+				msg: 'ok',
+				data: {
+					path: fileDownPath,
+					url,
+				},
+			};
+		} catch (err) {
+			const { cause, stack } = extractCauseAndStack(err);
+			result = {
+				msg: cause,
+				data: stack,
+			};
+		}
+		return result;
+	}
 	// async replace(params: ParamsDictionary): Promise<any> {
 	// 	try {
 	// 		let filePath = fileDir + params.fileid;

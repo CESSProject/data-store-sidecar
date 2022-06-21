@@ -54,9 +54,12 @@ const vm = new Vue({
 			this.currAPIName = sour.currAPIName;
 			this.onChangeAPI();
 			console.log(sour.resultJson);
-			this.currAPI.avgs.forEach(t=>{
-				let v=sour.resultJson.data[t.key]||sour.resultJson.data;
-				t.value=v;
+			this.currAPI.avgs.forEach((t) => {
+				let v = sour.resultJson.data[t.key];
+				if (!v && typeof sour.resultJson.data != 'object') {
+					v = sour.resultJson.data;
+				}
+				t.value = v;
 			});
 		},
 		onChangeAPI(type) {
@@ -96,7 +99,7 @@ const vm = new Vue({
 			let url = currAPI.url;
 			const fd = new FormData();
 			that.result = 'requsting...';
-			that.resultJson=null;
+			that.resultJson = null;
 			if (currAPI.avgs) {
 				const arr = [];
 				let err = [];

@@ -3,8 +3,9 @@ const vm = new Vue({
 	el: '#app',
 	data: {
 		currAPIName: 'findPrice',
+		group: 'fileBank',
 		currAPI: '',
-		apis: requestAPI,
+		apis: [],
 		result: '',
 		resultJson: null,
 		loading: false,
@@ -13,13 +14,20 @@ const vm = new Vue({
 			file: null,
 			currAPIName: 'upload',
 			currAPI: '',
-			apis: offlineSingAPI,
+			apis: [],
 			result: '',
 			resultJson: null,
 			loading: false,
 		},
 	},
-	beforeMount: function () {},
+	beforeMount: function () {
+		const group =
+			window.location.href.indexOf('store') != -1 ? 'store' : 'fileBank';
+		this.apis = requestAPI.filter((t) => t.group == group);
+		this.offlineSign.apis = offlineSingAPI.filter((t) => t.group == group);
+		this.group = group;
+		console.log('group', group);
+	},
 	mounted: function () {
 		this.onChangeAPI();
 		this.onChangeAPI('offline');
@@ -61,6 +69,7 @@ const vm = new Vue({
 				}
 				t.value = v;
 			});
+			this.result='';
 		},
 		onChangeAPI(type) {
 			let that = this;
@@ -70,10 +79,14 @@ const vm = new Vue({
 			if (!that.currAPIName) {
 				return;
 			}
-			const currAPI = that.apis.find((a) => a.name == that.currAPIName);
+			let currAPI = that.apis.find((a) => a.name == that.currAPIName);
+			if (!currAPI) {
+				currAPI = that.apis[0];
+				that.currAPIName = currAPI.name;
+			}
 			if (currAPI.avgs) {
 				currAPI.avgs.forEach((t) => {
-					if (t.key == 'walletAddress') {
+					if (t.key == 'walletAddress' || t.key == 'addr') {
 						t.value = 'cXh5StobuVP4B7mGH9xn8dSsDtXks4qLAou8ZdkZ6DbB6zzxe';
 					} else if (t.key == 'privatekey') {
 						t.value = '123456';
@@ -134,7 +147,10 @@ const vm = new Vue({
 			that.resultJson = result;
 			that.result = JSON.stringify(result, null, 5);
 			// console.log(currAPI.name, result.data.url);
-			if (currAPI.name == 'download' && result.data.url) {
+			if (
+				(currAPI.name == 'download' || currAPI.name == 'retrieve') &&
+				result.data.url
+			) {
 				that.fileDownloadUrl = result.data.url;
 				console.log('here...');
 				clearTimeout(timeout);

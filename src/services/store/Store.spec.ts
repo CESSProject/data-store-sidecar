@@ -101,6 +101,74 @@ describe('store', () => {
 		expect(result).toBe(true);
 	});
 
+	// 0.3
+	it('store', async () => {
+		const fileDir = join(__dirname, './');
+		const fileName = 'tmpfile.txt';
+		const fullPath = fileDir + fileName;
+		if (!fs.existsSync(fullPath)) {
+			fs.writeFileSync(fullPath, 'for test');
+		}
+		const req = {
+			files: {
+				file: {
+					path: fullPath,
+					name: fileName,
+				},
+			},
+		};
+		const res = await store.getStoreTxHash(
+			{
+				mnemonic,
+				keywords: 'keyword',
+			},
+			req
+		);
+		expect(typeof res.data.txHashUpload).toBe('string');
+	});
+	it('retrieve ', async () => {
+		const res = await store.getRetrieveTxHash({
+			mnemonic,
+			fileId: '3aVCtvQvZ8evdWu9kZLMa8'
+		});
+		const result = res.msg == 'ok' && typeof res.data.txHash == 'string';
+		expect(result).toBe(true);
+	});
+	it('replace', async () => {
+		const fileDir = join(__dirname, './');
+		const fileName = 'tmpfile.txt';
+		const fullPath = fileDir + fileName;
+		if (!fs.existsSync(fullPath)) {
+			fs.writeFileSync(fullPath, 'for test');
+		}
+		const req = {
+			files: {
+				file: {
+					path: fullPath,
+					name: fileName,
+				},
+			},
+		};
+		const res = await store.getReplaceTxHash(
+			{
+				mnemonic,
+				oldFileId:'9HsMcyFpRpFfPm8vjNcfKV',
+				keywords: 'keyword',
+			},
+			req
+		);
+		expect(typeof res.data.txHashUpload).toBe('string');
+	});
+	it('delete ', async () => {
+		const res = await store.getRetrieveTxHash({
+			mnemonic,
+			fileId: '3aVCtvQvZ8evdWu9kZLMa8'
+		});
+		const result = res.msg == 'ok' && typeof res.data.txHash == 'string';
+		expect(result).toBe(true);
+	});
+
+
 	it('publickey ', async () => {
 		const res = await store.publickey({
 			addr: walletAddress,

@@ -22,7 +22,7 @@ const vm = new Vue({
 	},
 	beforeMount: function () {
 		const group =
-			window.location.href.indexOf('store') != -1 ? 'store' : 'fileBank';
+			window.location.href.indexOf('?store') != -1 ? 'store' : 'fileBank';
 		this.apis = requestAPI.filter((t) => t.group == group);
 		this.offlineSign.apis = offlineSingAPI.filter((t) => t.group == group);
 		this.group = group;

@@ -1,6 +1,40 @@
 body{
     margin:20px;
 }
+#app{
+    padding-left:10%;
+}
+.left-pannel{
+    width:10%;
+    display: block;
+    overflow: hidden;
+    float:
+    left;
+    background-color: #fff;
+    color: #009688;
+    border-right:1px solid #ddd;
+    box-shadow: 5px 0px 5px 0px rgb(0 0 0 / 10%);
+    position: fixed;
+    top: 32px;
+    left: 0px;
+}
+.left-pannel a{
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    clear: both;
+    line-height: 40px;
+    text-align: center;
+}
+.left-pannel i{
+    float: right;
+    line-height: 40px;
+    padding-right: 10px;
+}
+.left-pannel .curr{
+    color: white;
+    background-color: #409eff;
+}
 .result{ 
     display: block;
     overflow: hidden;
@@ -28,8 +62,9 @@ h2{
     padding:20px;
 }
 .box-card{
-    width:48%;
-    float:left;
+    width: 48%;
+    float:
+    left;
     margin:10px;
 }
 .file-box{

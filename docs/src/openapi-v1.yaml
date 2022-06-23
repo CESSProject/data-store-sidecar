@@ -20,6 +20,7 @@ tags:
 - name: paras
 - name: trace
 - name: store
+- name: datastore
 paths:
   /accounts/{accountId}/asset-balances:
     get:
@@ -1492,13 +1493,148 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/storeRes'
+  /store/datastore/getStoreTxHash:
+    post:
+      tags:
+      - datastore
+      summary: |
+        Offline sign store transfer.  
+      operationId: getStoreTxHash
+      requestBody:
+        $ref: '#/components/requestBodies/getStoreTxHash'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/datastore/getRetrieveTxHash:
+    post:
+      tags:
+      - datastore
+      summary: |
+        Offline sign retrieve transfer.  
+      operationId: getRetrieveTxHash
+      requestBody:
+        $ref: '#/components/requestBodies/getRetrieveTxHash'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/datastore/getReplaceTxHash:
+    post:
+      tags:
+      - datastore
+      summary: |
+        Offline sign replace transfer.  
+      operationId: getReplaceTxHash
+      requestBody:
+        $ref: '#/components/requestBodies/getReplaceTxHash'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/datastore/getDeleteTxHash:
+    post:
+      tags:
+      - datastore
+      summary: |
+        Offline sign delete transfer.  
+      operationId: getDeleteTxHash
+      requestBody:
+        $ref: '#/components/requestBodies/getDeleteTxHash'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/datastore/store:
+    post:
+      tags:
+      - datastore
+      summary: |
+        Submit the transaction of store a file.  
+      operationId: store
+      requestBody:
+        $ref: '#/components/requestBodies/store'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/datastore/retrieve:
+    post:
+      tags:
+      - datastore
+      summary: |
+        Submit the transaction of retrieve a file.  
+      operationId: retrieve
+      requestBody:
+        $ref: '#/components/requestBodies/retrieve'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/datastore/replace:
+    post:
+      tags:
+      - datastore
+      summary: |
+        Submit the transaction of replace a file.  
+      operationId: replace
+      requestBody:
+        $ref: '#/components/requestBodies/replace'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+  /store/datastore/delete:
+    post:
+      tags:
+      - datastore
+      summary: |
+        Submit the transaction of delete file.  
+      operationId: delete
+      requestBody:
+        $ref: '#/components/requestBodies/delete'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/storeRes'
+                
 components:
   schemas:
     storeRes:
-      result:
+      type: object
+      properties:
+        msg:
+          type: string
+          description: The message of response,where success while return "ok".
+          format: string
+        data:
           type: object
-          description: The result.
-          format: object    
+          description: The response body.
+          format: string 
     upload:
       type: object
       properties:
@@ -1595,7 +1731,130 @@ components:
         maxPrice:
           type: number
           description: The max price.
-          format: unsignedInteger   
+          format: unsignedInteger  
+    storeSignExpansion:
+      type: object
+      properties:
+        mnemonic:
+          type: string
+          description: Your mnemonic.
+          format: string
+        file:
+          type: file
+          description: The local file.
+          format: bin
+        keywords:
+          type: string
+          description: The keywords string.
+          format: string
+    getStoreTxHash:
+      type: object
+      properties:
+        mnemonic:
+          type: string
+          description: Your mnemonic.
+          format: string
+        file:
+          type: string
+          description: The local file.
+          format: bin
+        keywords:
+          type: string
+          description: The keywords string.
+          format: string          
+    getRetrieveTxHash:
+      type: object
+      properties:
+        mnemonic:
+          type: string
+          description: Your mnemonic.
+          format: string
+        fileId:
+          type: string
+          description: The id of retrieve file.
+          format: string
+    getReplaceTxHash:
+      type: object
+      properties:
+        mnemonic:
+          type: string
+          description: Your mnemonic.
+          format: string
+        file:
+          type: string
+          description: The local file.
+          format: binary
+        oldFileId:
+          type: string
+          description: The id of file where want to replace.
+          format: string          
+        keywords:
+          type: string
+          description: The keywords string.
+          format: string
+    getDeleteTxHash:
+      type: object
+      properties:
+        mnemonic:
+          type: string
+          description: Your mnemonic.
+          format: string
+        fileId:
+          type: string
+          description: The id of file.
+          format: string
+    store:
+      type: object
+      properties:
+        txHashUpload:
+          type: string
+          description: The transaction hash for upload.
+          format: string
+        txHashStore:
+          type: string
+          description: The transaction hash for store.
+          format: binary
+        fileid:
+          type: string
+          description: The id of file.
+          format: string
+    retrieve:
+      type: object
+      properties:
+        txHash:
+          type: string
+          description: The transaction hash for retrieve.
+          format: string
+        fileid:
+          type: string
+          description: The id of file.
+          format: string
+    replace:
+      type: object
+      properties:
+        txHashReplace:
+          type: string
+          description: The transaction hash for replace.
+          format: string
+        txHashUpload:
+          type: string
+          description: The transaction hash for upload.
+          format: binary
+        newFileId:
+          type: string
+          description: The id of new file.
+          format: string
+    dataStoreDelete:
+      type: object
+      properties:
+        txHash:
+          type: string
+          description: The transaction hash.
+          format: string
+        txHash2:
+          type: string
+          description: The transaction hash2.
+          format: string                  
     AccountAssetsBalances:
       type: object
       properties:
@@ -3144,4 +3403,45 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/signExpansion'
+      required: true
+    getStoreTxHash:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getStoreTxHash'
+    getRetrieveTxHash:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getRetrieveTxHash'
+    getReplaceTxHash:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getReplaceTxHash'
+    getDeleteTxHash:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/getDeleteTxHash'
+    store:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/store'
+    retrieve:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/retrieve'
+    replace:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/replace'
+    delete:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/dataStoreDelete'
       required: true

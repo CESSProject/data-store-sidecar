@@ -21,6 +21,7 @@ export class Store extends AbstractService {
 		const storeApi = new FileStorage({
 			nodeURL: SidecarConfig.config.SUBSTRATE.WS_URL, //'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
 			keyringOption: { type: 'sr25519', ss58Format: 42 },
+			debug: true,
 		});
 		super(api);
 		this.storeApi = storeApi;
@@ -28,6 +29,7 @@ export class Store extends AbstractService {
 		const storeApiForTX = new DataStorage({
 			nodeURL: 'ws://106.15.44.155:9949/', //'wss://example-datastore.cess.cloud/ws/', //'ws://106.15.44.155:9948', //'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
 			keyringOption: { type: 'sr25519', ss58Format: 42 },
+			debug: true,
 		});
 		this.storeApiForTX = storeApiForTX;
 	}
@@ -255,8 +257,11 @@ export class Store extends AbstractService {
 		let result: any = null;
 		try {
 			let newFilePath = path.dirname(req.files.file.path);
+			// console.log('newFilePath',newFilePath);
 			newFilePath = path.join(newFilePath, './') + req.files.file.name;
+			// console.log('newFilePath',newFilePath);
 			if (req.files.file.path != newFilePath) {
+				// console.log('req.files.file.path != newFilePath',req.files.file.path);
 				fs.renameSync(req.files.file.path, newFilePath);
 			}
 			let data = await this.storeApi.getFileUploadTxHash(

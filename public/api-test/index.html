@@ -14,8 +14,10 @@
 <body>
     <div id="app">
         <div class="left-pannel">
-            <a href="/api-test/" :class="group=='fileBank'?'curr':''">FileBank <i v-if="group=='fileBank'" class="fa fa-caret-right" aria-hidden="true"></i></a>
-            <a href="/api-test/?store" :class="group!='fileBank'?'curr':''">DataStore <i v-if="group!='fileBank'" class="fa fa-caret-right" aria-hidden="true"></i></a>
+            <a href="/api-test/" :class="group=='fileBank'?'curr':''">FileBank <i v-if="group=='fileBank'"
+                    class="fa fa-caret-right" aria-hidden="true"></i></a>
+            <a href="/api-test/?store" :class="group!='fileBank'?'curr':''">DataStore <i v-if="group!='fileBank'"
+                    class="fa fa-caret-right" aria-hidden="true"></i></a>
         </div>
         <el-card class="box-card">
             <div slot="header" class="clearfix">
@@ -44,13 +46,18 @@
             </div>
             <el-button v-if="currAPIName" :loading="loading" :disabled="loading" style="margin-top:10px;" type="primary"
                 @click="onClick">GO Start</el-button>
-            <div v-if="result" class="result">
+            <div v-if="resultJson&&resultJson.msg!='pending'" class="result">
                 <h2>response result</h2>
                 <el-input type="textarea" :rows="5" autosize placeholder="result" v-model="result" />
                 <a target="_blank" :href="fileDownloadUrl">
                     <el-alert title="The file is ready. Click here to save" type="success" effect="dark" show-icon>
                     </el-alert>
                 </a>
+            </div>
+            <div class="process-box" v-if="progressData">
+                <h2>{{progressData.msg}}</h2>
+                <el-progress v-if="progressData.per" :text-inside="true" :stroke-width="24"
+                    :percentage="progressData.per" status="success"></el-progress>
             </div>
             <div v-if="fileDownloadUrl" class="result">
                 <h2>download link</h2>
@@ -82,17 +89,18 @@
                                 type="file" /></div>
                     </div>
                 </div>
-            </div>            
+            </div>
             <el-button v-if="offlineSign.currAPIName" :loading="offlineSign.loading" :disabled="offlineSign.loading"
-                style="margin-top:10px;" type="success" @click="onClick('offline')">Offline Sign</el-button>            
+                style="margin-top:10px;" type="success" @click="onClick('offline')">Offline Sign</el-button>
             <div v-if="offlineSign.result" class="result">
-                <h2>response result  &nbsp;&nbsp;
-                    <el-button v-if="offlineSign.currAPIName&&offlineSign.resultJson&&offlineSign.resultJson.msg=='ok'" size="mini" :loading="offlineSign.loading" :disabled="offlineSign.loading"
-                style="margin-top:10px;" type="warning" @click="copyData">← Copy result to left</el-button>
+                <h2>response result &nbsp;&nbsp;
+                    <el-button v-if="offlineSign.currAPIName&&offlineSign.resultJson&&offlineSign.resultJson.msg=='ok'"
+                        size="mini" :loading="offlineSign.loading" :disabled="offlineSign.loading"
+                        style="margin-top:10px;" type="warning" @click="copyData">← Copy result to left</el-button>
                 </h2>
                 <el-input type="textarea" :rows="5" autosize placeholder="result" v-model="offlineSign.result">
                 </el-input>
-            </div>            
+            </div>
         </el-card>
     </div>
 

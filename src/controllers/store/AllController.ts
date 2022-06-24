@@ -54,6 +54,8 @@ export default class AllController extends AbstractController<Store> {
 		arrPost.push(['datastore/replace', this.postAll]);
 		arrPost.push(['datastore/delete', this.postAll]);
 
+		arrPost.push(['task/progress', this.postAll]);
+
 		
 
 		this.safeMountAsyncPostHandlers(arrPost);

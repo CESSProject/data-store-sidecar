@@ -19,6 +19,7 @@ const vm = new Vue({
 			resultJson: null,
 			loading: false,
 		},
+		progressData: null,
 	},
 	beforeMount: function () {
 		const group =
@@ -29,6 +30,7 @@ const vm = new Vue({
 		console.log('group', group);
 	},
 	mounted: function () {
+		const that = this;
 		this.onChangeAPI();
 		this.onChangeAPI('offline');
 	},
@@ -69,7 +71,7 @@ const vm = new Vue({
 				}
 				t.value = v;
 			});
-			this.result='';
+			this.result = '';
 		},
 		onChangeAPI(type) {
 			let that = this;
@@ -102,6 +104,32 @@ const vm = new Vue({
 			this.offlineSign.file = e.target.files[0];
 			item.value = e.target.files[0];
 		},
+		async showProgress(id, name) {
+			let that = this;
+			let url = '/store/task/progress';
+			const fd = new FormData();
+			fd.append('progressId', id);
+			console.log('start request...');
+			const result = await ajax('post', url, fd);
+			that.progressData = result;
+			console.log(
+				'==========================response=========================='
+			);
+			console.log(result);
+			console.log(
+				'==========================response=========================='
+			);
+			if (result.isComplete) {
+				if(name=='download'&&result.data){
+					that.fileDownloadUrl = result.data;
+				}
+				// that.progressData = null;
+				return;
+			}
+			setTimeout(async () => {
+				await that.showProgress(id);
+			}, 200);
+		},
 		async commonGet(type) {
 			let that = this;
 			const This = this;
@@ -113,6 +141,7 @@ const vm = new Vue({
 			const fd = new FormData();
 			that.result = 'requsting...';
 			that.resultJson = null;
+			
 			if (currAPI.avgs) {
 				const arr = [];
 				let err = [];
@@ -147,12 +176,23 @@ const vm = new Vue({
 			that.resultJson = result;
 			that.result = JSON.stringify(result, null, 5);
 			// console.log(currAPI.name, result.data.url);
+
+			if (
+				currAPI.group == 'fileBank' &&
+				(currAPI.name == 'upload' || currAPI.name == 'download')
+			) {
+				let id = currAPI.avgs.find(
+					(t) => t.key == 'fileid' || t.key == 'fileId'
+				).value;
+				await that.showProgress(id,currAPI.name);
+			}
+
+
 			if (
 				(currAPI.name == 'download' || currAPI.name == 'retrieve') &&
 				result.data.url
 			) {
 				that.fileDownloadUrl = result.data.url;
-				console.log('here...');
 				clearTimeout(timeout);
 				timeout = setTimeout(() => {
 					that.fileDownloadUrl = '';

@@ -166,15 +166,16 @@ export class Store extends AbstractService {
 			if (!fs.existsSync(filePath)) {
 				throw 'file not found';
 			}
-			const data = await this.storeApi.fileUploadWithTxHash(
-				params.txHash,
-				filePath,
-				params.fileid,
-				params.privatekey
-			);
+			this.storeApi
+				.fileUploadWithTxHash(
+					params.txHash,
+					filePath,
+					params.fileid,
+					params.privatekey
+				)
+				.then(console.log, console.log);
 			result = {
-				msg: 'ok',
-				data,
+				msg: 'pending',
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -189,18 +190,14 @@ export class Store extends AbstractService {
 		let result: any = null;
 		try {
 			const fileId = params.fileId;
-			const fileDownPath = await this.storeApi.fileDownload(
-				fileId,
-				fileDir,
-				params.privatekey
-			);
-			const url = '/upload-file/' + path.basename(fileDownPath);
+			global[fileId] = null;
+			this.storeApi
+				.fileDownload(fileId, fileDir, params.privatekey)
+				.then(console.log, console.log);
+			// const url = '/upload-file/' + path.basename(fileDownPath);
+			// const url = '';
 			result = {
-				msg: 'ok',
-				data: {
-					path: fileDownPath,
-					url,
-				},
+				msg: 'pending',
 			};
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
@@ -616,6 +613,23 @@ export class Store extends AbstractService {
 				msg: 'ok',
 				data,
 			};
+		} catch (err) {
+			const { cause, stack } = extractCauseAndStack(err);
+			result = {
+				msg: cause,
+				data: stack,
+			};
+		}
+		return result;
+	}
+
+	progress(params: ParamsDictionary): any {
+		let result: any = null;
+		try {
+			if (!params.progressId) {
+				throw 'progressId is required.';
+			}
+			result = global[params.progressId];
 		} catch (err) {
 			const { cause, stack } = extractCauseAndStack(err);
 			result = {

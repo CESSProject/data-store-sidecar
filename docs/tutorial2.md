@@ -29,64 +29,51 @@ In order to test the code more conveniently, we have done the following preparat
 
 ## Demonstration of demo's API service
 
-### buy storage space
+### buy storage space (If you only use the default account address, you can skip this section)
 
 **1. We create a transaction and sign it offline to get the tx string firstly.**
 
-9cxPjcxLquWU6x2TLTrPMG
-
-44z8Fz2YdkJHAPaWVzLQef
-
-# ![Figure 2](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p1.png)
-
-# ![Figure 3](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p1.6.png)
+# ![Figure 2](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/01.png)
 
 **2. Then, as you think. We fill in the newly obtained tx string into the input box on the left and click the start button. If your output is as shown, then congratulations, the space purchase was successful.**
 
-# ![Figure 4](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p2.png)
+# ![Figure 3](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/02.png)
 
 ### store
 
-**1. We can store the file. As shown below now, select the file to store and get the tx string, and fileid.**
+**The store interface is responsible for uploading files to CESS and recording them in the sample network. You can use a test tool to experiment with this. As shown in the figure below, first select store, select the file to be stored, and click offline sign. Then, click the orange button, and the program will automatically fill in the signed transaction to the left column. At this point you can click Go Start. If it returns ok below, it means the operation is successful. In order to continue the subsequent process, we record the fileid of the file here.**
 
-# ![Figure 5](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p3.png)
+# ![Figure 2](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p1.png)
 
-**2. Similarly, fill in the input box on the left with the obtained tx string and fileid. By the way, please don't forget to select the upload option.**
+**At this point, you can query the record of the stored file in the sample network.**
 
-# ![Figure 6](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p4.png)
-
-
-### query
-
-**1. At this point, we can check whether the file was uploaded successfully based on the file id.**
-
-# ![Figure 7](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p5.png)
-
+# ![Figure 3](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p1.6.png)
 
 _It is a reminder that before downloading the file, please wait a moment (the specific time depends on the size of the uploaded file), especially if you have just uploaded it. Similarly, if you encounter a download failure, please first check that the process you have operated is correct. If everything is correct, then please try again after a while._
 
 ### retrieve
 
-**1. Since we do not need to initiate a transaction request to the network to download the file, we only need to fill in the fileid to get it, as below.**
+**After the file is stored, you can download the file at any time. Again, this step can be demonstrated using the test tool. The image below shows how to download the file we stored in the previous step.**
 
-# ![Figure 8](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p6.png)
+# ![Figure 4](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p2.png)
 
-**2. If everything is ok, you will be able to see the following popup. Please click it and download the file!**
+### replace
 
-# ![Figure 9](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v3-07.png)
+**In addition, the Data Store Sidecar also supports the replace interface, which supports the function of uploading new files and replacing old files. The operation steps are shown in the figure below.**
+
+# ![Figure 5](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p3.png)
+
+**If you want to confirm whether the new file is stored successfully, we can also perform a retrieve test on the new file as below.**
+
+# ![Figure 6](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p4.png)
+
 
 ### delete
 
-**When you want to delete a stored file, you can do the following.**
+**Of course, if you no longer want to store some files, you can delete it from the remote at any time.**
 
-**1. You can check if the file is already stored, as below shown.**
+# ![Figure 7](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p5.png)
 
-# ![Figure 10](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-05.png)
+**Once deleted, the file can no longer be retrieved.**
 
-**2. Now, we can delete the target file according to the following operations.**
-
-# ![Figure 11](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-08.png)
-
-**3. Want to check if the deletion was successful? Here's what you need.**
-
-# ![Figure 12](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/v2-09.png)
+# ![Figure 8](https://raw.githubusercontent.com/CESSProject/W3F-illustration/main/data-store-sidecar/docs/m3-p6.png)

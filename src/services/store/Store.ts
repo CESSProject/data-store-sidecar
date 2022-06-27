@@ -193,9 +193,7 @@ export class Store extends AbstractService {
 			global[fileId] = null;
 			this.storeApi
 				.fileDownload(fileId, fileDir, params.privatekey)
-				.then(console.log, console.log);
-			// const url = '/upload-file/' + path.basename(fileDownPath);
-			// const url = '';
+				.then(console.log, console.log);			
 			result = {
 				msg: 'pending',
 			};

@@ -62,8 +62,7 @@
             <div v-if="fileDownloadUrl" class="result">
                 <h2>download link</h2>
                 <a target="_blank" :href="fileDownloadUrl">
-                    <el-alert title="The file is ready. Click here to save" type="success" effect="dark" show-icon>
-                    </el-alert>
+                    <el-button type="success" icon="el-icon-download">Save file</el-button>
                 </a>
             </div>
         </el-card>

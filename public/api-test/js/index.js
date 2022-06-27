@@ -106,6 +106,7 @@ const vm = new Vue({
 		},
 		async showProgress(id, name) {
 			let that = this;
+			that.loading = true;
 			let url = '/store/task/progress';
 			const fd = new FormData();
 			fd.append('progressId', id);
@@ -120,14 +121,23 @@ const vm = new Vue({
 				'==========================response=========================='
 			);
 			if (result.isComplete) {
-				if(name=='download'&&result.data){
-					that.fileDownloadUrl = result.data;
+				result.per = 100;
+				console.log(name, result);
+				if (name == 'download' && result.data) {
+					let url = result.data;
+					url = url.split('\\').join('/');
+					url = url.split('/');
+					url = '/upload-file/' + url[url.length - 1];
+					that.fileDownloadUrl = url;
 				}
-				// that.progressData = null;
-				return;
+				that.loading = false;
+				setTimeout(() => {
+					that.progressData = null;
+				}, 10000);
+				return that.$alert('complete', { type: 'success' });
 			}
 			setTimeout(async () => {
-				await that.showProgress(id);
+				await that.showProgress(id, name);
 			}, 200);
 		},
 		async commonGet(type) {
@@ -141,7 +151,7 @@ const vm = new Vue({
 			const fd = new FormData();
 			that.result = 'requsting...';
 			that.resultJson = null;
-			
+
 			if (currAPI.avgs) {
 				const arr = [];
 				let err = [];
@@ -178,25 +188,14 @@ const vm = new Vue({
 			// console.log(currAPI.name, result.data.url);
 
 			if (
+				type != 'offline' &&
 				currAPI.group == 'fileBank' &&
 				(currAPI.name == 'upload' || currAPI.name == 'download')
 			) {
 				let id = currAPI.avgs.find(
 					(t) => t.key == 'fileid' || t.key == 'fileId'
 				).value;
-				await that.showProgress(id,currAPI.name);
-			}
-
-
-			if (
-				(currAPI.name == 'download' || currAPI.name == 'retrieve') &&
-				result.data.url
-			) {
-				that.fileDownloadUrl = result.data.url;
-				clearTimeout(timeout);
-				timeout = setTimeout(() => {
-					that.fileDownloadUrl = '';
-				}, 20000);
+				await that.showProgress(id, currAPI.name);
 			}
 			return result;
 		},

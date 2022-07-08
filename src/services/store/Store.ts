@@ -10,6 +10,7 @@ import path from 'path';
 import { FileStorage, DataStorage, Converter } from 'cess-js-sdk';
 import { SidecarConfig } from '../../SidecarConfig';
 import { ParamsDictionary } from 'express-serve-static-core';
+import { hexToU8a } from '@polkadot/util';
 
 const fileDir = path.join(__dirname, '../../../../public/upload-file/');
 makeDir(fileDir).then(() => {}, console.error);
@@ -27,7 +28,7 @@ export class Store extends AbstractService {
 		this.storeApi = storeApi;
 
 		const storeApiForTX = new DataStorage({
-			nodeURL: 'ws://106.15.44.155:9949/', //'wss://example-datastore.cess.cloud/ws/', //'ws://106.15.44.155:9948', //'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
+			nodeURL: 'ws://106.15.44.155:9948/', //'wss://example-datastore.cess.cloud/ws/', //'ws://106.15.44.155:9948', //'wss://testnet-rpc.cess.cloud/ws/', //SidecarConfig.config.SUBSTRATE.WS_URL,
 			keyringOption: { type: 'sr25519', ss58Format: 42 },
 			debug: true,
 		});
@@ -159,10 +160,16 @@ export class Store extends AbstractService {
 			if (!params.txHash) {
 				throw 'txHash is required.';
 			}
-			if (!params.fileid) {
-				throw 'fileid is required.';
+			if (!params.fileId) {
+				throw 'fileId is required.';
 			}
-			let filePath = fileDir + params.fileid;
+			if (!params.publicKeyStr) {
+				throw 'publicKey is required.';
+			}
+			if (!params.signStr) {
+				throw 'signStr is required.';
+			}
+			let filePath = fileDir + params.fileId;
 			if (!fs.existsSync(filePath)) {
 				throw 'file not found';
 			}
@@ -170,8 +177,9 @@ export class Store extends AbstractService {
 				.fileUploadWithTxHash(
 					params.txHash,
 					filePath,
-					params.fileid,
-					params.privatekey
+					params.fileId,
+					params.publicKeyStr,
+					params.signStr
 				)
 				.then(console.log, console.log);
 			result = {
@@ -193,7 +201,7 @@ export class Store extends AbstractService {
 			global[fileId] = null;
 			this.storeApi
 				.fileDownload(fileId, fileDir, params.privatekey)
-				.then(console.log, console.log);			
+				.then(console.log, console.log);
 			result = {
 				msg: 'pending',
 			};
@@ -261,13 +269,9 @@ export class Store extends AbstractService {
 			}
 			let data = await this.storeApi.getFileUploadTxHash(
 				params.mnemonic,
-				newFilePath,
-				parseInt(params.backups),
-				parseInt(params.downloadfee),
-				null,
-				params.privatekey
+				newFilePath
 			);
-			fs.renameSync(newFilePath, fileDir + data.fileid);
+			fs.renameSync(newFilePath, fileDir + data.fileId);
 			result = {
 				msg: 'ok',
 				data,

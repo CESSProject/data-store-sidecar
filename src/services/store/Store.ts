@@ -10,7 +10,6 @@ import path from 'path';
 import { FileStorage, DataStorage, Converter } from 'cess-js-sdk';
 import { SidecarConfig } from '../../SidecarConfig';
 import { ParamsDictionary } from 'express-serve-static-core';
-import { hexToU8a } from '@polkadot/util';
 
 const fileDir = path.join(__dirname, '../../../../public/upload-file/');
 makeDir(fileDir).then(() => {}, console.error);
@@ -200,7 +199,7 @@ export class Store extends AbstractService {
 			const fileId = params.fileId;
 			global[fileId] = null;
 			this.storeApi
-				.fileDownload(fileId, fileDir, params.privatekey)
+				.fileDownload(fileId, fileDir)
 				.then(console.log, console.log);
 			result = {
 				msg: 'pending',

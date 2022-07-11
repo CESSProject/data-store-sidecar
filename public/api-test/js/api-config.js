@@ -96,12 +96,7 @@ const requestAPI = [
 				type: 'string',
 				value: '',
 				must: true,
-			},
-			{
-				key: 'privatekey',
-				type: 'string',
-				value: '',
-			},
+			}
 		],
 	},
 	{
